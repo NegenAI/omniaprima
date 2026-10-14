@@ -3,52 +3,27 @@
 import * as React from "react"
 
 import { SectionHeading } from "@/components/section-heading"
-import { VehicleCard, type Vehicle } from "@/components/vehicle-card"
+import { VehicleCard } from "@/components/vehicle-card"
+import {
+  featuredByFormula,
+  formulaLabels,
+  formulas,
+  type Formula,
+} from "@/lib/vehicles"
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@workspace/ui/components/toggle-group"
 
-const formulas = [
-  {
-    value: "lungo-termine",
-    label: "Noleggio lungo termine",
-    variant: "rental",
-  },
-  {
-    value: "breve-termine",
-    label: "Noleggio breve termine",
-    variant: "rental",
-  },
-  { value: "vendita", label: "Vendita", variant: "sales" },
-] as const
-
-type Formula = (typeof formulas)[number]["value"]
-
-// Placeholder inventory from Figma (three identical sample cards).
-// TODO: replace with real vehicles per formula.
-const sampleVehicle: Omit<Vehicle, "id"> = {
-  name: "Piattaforma aerea",
-  description: "Fino a 24m. di altezza",
-  image: {
-    src: "/images/home/vehicle-piattaforma-aerea.png",
-    alt: "Autocarro con piattaforma aerea",
-  },
-  specs: [
-    { icon: { src: "/icons/hand-controls.svg", width: 12 }, label: "3000 KM" },
-    { icon: { src: "/icons/gas-station.svg", width: 10.5 }, label: "30 GG" },
-    { icon: { src: "/icons/gas-station.svg", width: 10.5 }, label: "Diesel" },
-  ],
-  price: "45 €/giorno",
-  priceNote: "Iva inclusa",
-}
-
-const vehicles: Record<Formula, Vehicle[]> = Object.fromEntries(
-  formulas.map(({ value }) => [
-    value,
-    [1, 2, 3].map((n) => ({ ...sampleVehicle, id: `${value}-${n}` })),
-  ])
-) as Record<Formula, Vehicle[]>
+const formulaToggles: {
+  value: Formula
+  label: string
+  variant: "rental" | "sales"
+}[] = formulas.map((value) => ({
+  value,
+  label: formulaLabels[value],
+  variant: value === "vendita" ? "sales" : "rental",
+}))
 
 export function Offers() {
   const [formula, setFormula] = React.useState<Formula>("breve-termine")
@@ -84,7 +59,7 @@ export function Offers() {
               spacing={2}
               className="w-full flex-col md:w-auto md:flex-row"
             >
-              {formulas.map((item) => (
+              {formulaToggles.map((item) => (
                 <ToggleGroupItem
                   key={item.value}
                   value={item.value}
@@ -98,8 +73,12 @@ export function Offers() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {vehicles[formula].map((vehicle) => (
-              <VehicleCard key={vehicle.id} vehicle={vehicle} />
+            {featuredByFormula(formula).map((vehicle) => (
+              <VehicleCard
+                key={vehicle.slug}
+                vehicle={vehicle}
+                context="home"
+              />
             ))}
           </div>
         </div>

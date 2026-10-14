@@ -32,13 +32,27 @@ export const socials = [
   },
 ]
 
-export const navLinks = [
+export type SiteLink = { label: string; href: string }
+
+// Header menu, as in the Figma "Nav Bar aperto" (87:6733).
+export const navLinks: SiteLink[] = [
+  { label: "Home", href: "/" },
   { label: "Chi siamo", href: "/chi-siamo" },
-  { label: "Tutte le proposte", href: "/#proposte" },
-  { label: "Lungo Termine", href: "/#proposte" },
-  { label: "Breve Termine", href: "/#proposte" },
-  { label: "Vendita", href: "/#proposte" },
-  { label: "Contatti", href: "/#contatti" },
+  { label: "Tutte le proposte", href: "/proposte" },
+  { label: "Noleggio a lungo termine", href: "/noleggio-lungo-termine" },
+  { label: "Noleggio a breve termine", href: "/noleggio-breve-termine" },
+  { label: "Vendita", href: "/vendita" },
+  { label: "Contatti", href: "/contatti" },
+]
+
+// Footer links keep the shorter footer labels from Figma.
+export const footerLinks: SiteLink[] = [
+  { label: "Chi siamo", href: "/chi-siamo" },
+  { label: "Tutte le proposte", href: "/proposte" },
+  { label: "Lungo Termine", href: "/noleggio-lungo-termine" },
+  { label: "Breve Termine", href: "/noleggio-breve-termine" },
+  { label: "Vendita", href: "/vendita" },
+  { label: "Contatti", href: "/contatti" },
 ]
 
 // TODO: confirm the Google Business profile link and whether the rating should be live.

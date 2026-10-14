@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Logo } from "@/components/logo"
-import { contact, navLinks, socials } from "@/lib/site"
+import { contact, footerLinks, socials } from "@/lib/site"
 
 export function SiteFooter() {
   return (
@@ -40,8 +40,11 @@ export function SiteFooter() {
                     <Image
                       src={social.icon}
                       alt=""
-                      width={social.width}
-                      height={24}
+                      // 2x intrinsic attrs (integers) + exact CSS size: fractional
+                      // attrs trigger a false next/image aspect-ratio warning.
+                      width={social.width * 2}
+                      height={48}
+                      style={{ width: social.width, height: 24 }}
                     />
                   </a>
                 </li>
@@ -57,7 +60,7 @@ export function SiteFooter() {
           <Link href="/" className="text-[15px] font-bold">
             Homepage
           </Link>
-          {navLinks.map((link) => (
+          {footerLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}

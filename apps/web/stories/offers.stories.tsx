@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 import { VehicleCard } from "@/components/vehicle-card"
+import { featuredByFormula } from "@/lib/vehicles"
 import { Badge } from "@workspace/ui/components/badge"
 import {
   ToggleGroup,
@@ -58,31 +59,8 @@ export const Card: Story = {
   render: () => (
     <div className="w-[350px] bg-secondary p-ds-4">
       <VehicleCard
-        vehicle={{
-          id: "sample",
-          name: "Piattaforma aerea",
-          description: "Fino a 24m. di altezza",
-          image: {
-            src: "/images/home/vehicle-piattaforma-aerea.png",
-            alt: "Autocarro con piattaforma aerea",
-          },
-          specs: [
-            {
-              icon: { src: "/icons/hand-controls.svg", width: 12 },
-              label: "3000 KM",
-            },
-            {
-              icon: { src: "/icons/gas-station.svg", width: 10.5 },
-              label: "30 GG",
-            },
-            {
-              icon: { src: "/icons/gas-station.svg", width: 10.5 },
-              label: "Diesel",
-            },
-          ],
-          price: "45 €/giorno",
-          priceNote: "Iva inclusa",
-        }}
+        vehicle={featuredByFormula("breve-termine")[0]!}
+        context="home"
       />
     </div>
   ),

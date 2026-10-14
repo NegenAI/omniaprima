@@ -1,0 +1,71 @@
+/*
+ * Figma "Component 1" (22:277): a red dot with halos that grow and fade over
+ * four frames (public/icons/indicator-1…4.svg):
+ *   1: dot only · 2: halo r8 15% · 3: halo r8 10% + halo r12 15% · 4: halo r12 5%
+ * Each halo is a r=12 circle scaled down (4/12 = 0.333, 8/12 = 0.667).
+ */
+
+.halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: offer-halo-outer 1.6s ease-out infinite;
+}
+
+.haloInner {
+  animation-name: offer-halo-inner;
+}
+
+@keyframes offer-halo-outer {
+  0% {
+    transform: scale(0.333);
+    opacity: 0.15;
+  }
+  25% {
+    transform: scale(0.667);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  75% {
+    transform: scale(1);
+    opacity: 0.05;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes offer-halo-inner {
+  0%,
+  25% {
+    transform: scale(0.333);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(0.667);
+    opacity: 0.1;
+  }
+  75%,
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: hold Figma frame 3 (both halos visible, no movement). */
+@media (prefers-reduced-motion: reduce) {
+  .halo {
+    animation: none;
+    transform: scale(1);
+    opacity: 0.15;
+  }
+
+  .haloInner {
+    transform: scale(0.667);
+    opacity: 0.1;
+  }
+}
