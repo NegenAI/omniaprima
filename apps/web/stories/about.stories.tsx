@@ -18,7 +18,7 @@ export const TeamMember: Story = {
         member={{
           name: "Rosalba Cappelli",
           role: "Front Office",
-          photo: "/images/chi-siamo/team/rosalba-cappelli.png",
+          photo: "/images/chi-siamo/team/rosalba-cappelli.webp",
         }}
       />
     </div>

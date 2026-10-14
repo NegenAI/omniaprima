@@ -9,19 +9,19 @@ const reasons = [
   {
     title: "Veicoli garantiti",
     text: "Flotta recente, controllata e sempre in perfette condizioni.",
-    image: "/images/home/why-veicoli-garantiti.png",
+    image: "/images/home/why-veicoli-garantiti.webp",
     alt: "Consulente Omnia Prima alla scrivania",
   },
   {
     title: "Formule flessibili",
     text: "Breve, lungo termine o acquisto: scegli quello che preferisci.",
-    image: "/images/home/why-formule-flessibili.png",
+    image: "/images/home/why-formule-flessibili.webp",
     alt: "Consulente Omnia Prima in sede",
   },
   {
     title: "Assistenza 24/7",
     text: "Un team dedicato pronto ad aiutarti in ogni momento.",
-    image: "/images/home/why-assistenza.png",
+    image: "/images/home/why-assistenza.webp",
     alt: "Tecnico Omnia Prima al lavoro su un'auto",
   },
 ]

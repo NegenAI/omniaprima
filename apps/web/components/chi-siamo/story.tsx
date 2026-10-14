@@ -35,16 +35,14 @@ export function Story() {
         {/* Photo (331.9×226) with the rating badge overhanging its bottom-right corner */}
         <div className="relative pr-[18px] pb-[22px] lg:col-start-2 lg:row-span-2 lg:row-start-1">
           <div className="relative aspect-[332/226] overflow-hidden rounded-[10px]">
-            {/* Figma crop of the original photo: x 5%–97.5%, y 13.6%–64% */}
-            <div className="absolute top-[-27%] left-[-5.4%] h-[198.6%] w-[108.1%]">
-              <Image
-                src="/images/chi-siamo/storia-team.jpg"
-                alt="Il team di Omnia Prima in sede"
-                fill
-                sizes="(min-width: 1024px) 650px, 100vw"
-                className="object-cover"
-              />
-            </div>
+            {/* Designer's high-res export, already cropped to this frame */}
+            <Image
+              src="/images/chi-siamo/storia-team.webp"
+              alt="Il team di Omnia Prima in sede"
+              fill
+              sizes="(min-width: 1024px) 650px, 100vw"
+              className="object-cover"
+            />
           </div>
           <GoogleRating className="absolute right-0 bottom-0" />
         </div>

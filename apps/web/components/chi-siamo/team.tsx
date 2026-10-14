@@ -5,7 +5,7 @@ const team: TeamMember[] = [
   {
     name: "Simone Pomponii",
     role: "Titolare",
-    photo: "/images/chi-siamo/team/simone-pomponii.png",
+    photo: "/images/chi-siamo/team/simone-pomponii.webp",
     crop: {
       top: "-0.15%",
       left: "-5.27%",
@@ -16,27 +16,27 @@ const team: TeamMember[] = [
   {
     name: "Rosalba Cappelli",
     role: "Front Office",
-    photo: "/images/chi-siamo/team/rosalba-cappelli.png",
+    photo: "/images/chi-siamo/team/rosalba-cappelli.webp",
   },
   {
     name: "Pasquale Nolli",
     role: "Senior Sales",
-    photo: "/images/chi-siamo/team/pasquale-nolli.png",
+    photo: "/images/chi-siamo/team/pasquale-nolli.webp",
   },
   {
     name: "Marco Varani",
     role: "Service Advisor",
-    photo: "/images/chi-siamo/team/marco-varani.png",
+    photo: "/images/chi-siamo/team/marco-varani.webp",
   },
   {
     name: "Valeria Di Antonio",
     role: "Back Office",
-    photo: "/images/chi-siamo/team/valeria-di-antonio.png",
+    photo: "/images/chi-siamo/team/valeria-di-antonio.webp",
   },
   {
     name: "Daniel Di Ottavio",
     role: "After Sales Assistant",
-    photo: "/images/chi-siamo/team/daniel-di-ottavio.png",
+    photo: "/images/chi-siamo/team/daniel-di-ottavio.webp",
   },
 ]
 

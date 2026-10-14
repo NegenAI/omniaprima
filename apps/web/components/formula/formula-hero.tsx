@@ -34,7 +34,7 @@ export const formulaHeroes: Record<Formula, FormulaHeroContent> = {
     description:
       "Il noleggio a lungo termine è la soluzione più semplice per guidare senza pensieri: un canone mensile fisso pluriennale che include manutenzione, assicurazione, bollo e assistenza stradale h24. Zero anticipo obbligatorio, zero sorprese.",
     image: {
-      src: "/images/formula/hero-lungo-termine.png",
+      src: "/images/formula/hero-lungo-termine.webp",
       alt: "Una consulente Omnia Prima consegna le chiavi a un cliente – Omnia Prima Noleggio",
     },
   },
@@ -48,7 +48,7 @@ export const formulaHeroes: Record<Formula, FormulaHeroContent> = {
     description:
       "Il noleggio a breve termine è la soluzione ideale per chi ha bisogno di un'auto per pochi giorni o settimane: nessun impegno a lungo periodo, assicurazione e assistenza incluse, ritiro immediato. Prenota oggi, guida domani.",
     image: {
-      src: "/images/formula/hero-breve-termine.png",
+      src: "/images/formula/hero-breve-termine.webp",
       alt: "Un cliente sale a bordo di un'auto a noleggio – Omnia Prima Noleggio",
     },
   },
@@ -62,7 +62,7 @@ export const formulaHeroes: Record<Formula, FormulaHeroContent> = {
     description:
       "La vendita di veicoli nuovi o usati è la soluzione ideale per chi cerca un'auto in proprietà: prezzi trasparenti, finanziamenti su misura, consegna rapida. Nessuna sorpresa, solo garanzie.",
     image: {
-      src: "/images/formula/hero-vendita.png",
+      src: "/images/formula/hero-vendita.webp",
       alt: "Due clienti sorridenti alla guida della loro nuova auto – Omnia Prima Vendita",
     },
   },
