@@ -12,7 +12,7 @@ export function GoogleRating({ className }: { className?: string }) {
       rel="noreferrer"
       aria-label={`Valutazione ${googleReviews.rating} su Google Reviews`}
       className={cn(
-        "relative block h-14 w-[202px] rounded-[10px] border border-navy-200 bg-secondary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
+        "relative block h-14 w-[202px] rounded-image border border-navy-200 bg-secondary focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
         className
       )}
     >

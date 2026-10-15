@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 import { ContattiIntro } from "@/components/contatti/contatti-intro"
 import { LocationsMap } from "@/components/contatti/locations-map"
-import { QuoteRequest } from "@/components/contatti/quote-request"
+import { ContactSection } from "@/components/contact/contact-section"
 
 const meta = {
   title: "Pages/Contatti",
@@ -24,7 +24,7 @@ export const Page: Story = {
   render: () => (
     <main className="bg-secondary">
       <ContattiIntro />
-      <QuoteRequest />
+      <ContactSection id="preventivo" info="heading" />
     </main>
   ),
 }
@@ -34,7 +34,7 @@ export const Intro: Story = {
 }
 
 export const Quote: Story = {
-  render: () => <QuoteRequest />,
+  render: () => <ContactSection id="preventivo" info="heading" />,
 }
 
 export const StaticMap: Story = {

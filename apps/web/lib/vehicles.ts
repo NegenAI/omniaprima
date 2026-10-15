@@ -1,3 +1,5 @@
+import type { ImageCrop } from "@/components/cropped-image"
+
 // Placeholder inventory reproducing the Figma cards (listing pages 85:831, 9:5,
 // 85:1223, 87:3489, homepage 113:2654 and the card board 87:3981/4006/4038).
 // TODO: replace with the real inventory (CMS/API) once Omnia Prima provides it.
@@ -5,6 +7,11 @@
 export const formulas = ["lungo-termine", "breve-termine", "vendita"] as const
 
 export type Formula = (typeof formulas)[number]
+
+/** Brand colour family of a formula: amber for rentals, azzurro for sales. */
+export function formulaTone(formula: Formula): "rental" | "sales" {
+  return formula === "vendita" ? "sales" : "rental"
+}
 
 export const formulaLabels: Record<Formula, string> = {
   "lungo-termine": "Noleggio lungo termine",
@@ -27,12 +34,12 @@ export type VehicleImage = {
    * Figma crop of the fill inside the 350×264 card frame, in % of the frame
    * (width, height, left, top). Omit for a plain centred cover.
    */
-  crop?: { width: number; height: number; left: number; top: number }
+  crop?: ImageCrop
   /**
    * Figma crop of the fill inside the 351×260 scheda gallery frame (26:2668),
    * same units as `crop`. Omit for a plain centred cover.
    */
-  galleryCrop?: { width: number; height: number; left: number; top: number }
+  galleryCrop?: ImageCrop
 }
 
 /** "Caratteristiche auto" check-list group on the scheda page. */

@@ -4,7 +4,9 @@ import {
   ContactForm,
   type ContactFormWhatsapp,
 } from "@/components/contact/contact-form"
+import { Section } from "@/components/layout/section"
 import { SectionHeading } from "@/components/section-heading"
+import { quoteIntro } from "@/lib/copy"
 import { contact } from "@/lib/site"
 import { cn } from "@workspace/ui/lib/utils"
 
@@ -60,7 +62,7 @@ export function ContactDetails({
           <div key={detail.label} className="flex items-center gap-6">
             <Image src={detail.icon} alt="" width={24} height={24} />
             <div>
-              <dt className="mb-[3px] text-sm leading-4 text-muted-foreground uppercase">
+              <dt className="mb-[3px] text-caption text-muted-foreground uppercase">
                 {detail.label}
               </dt>
               <dd className="text-base leading-5.5 text-foreground">
@@ -73,24 +75,28 @@ export function ContactDetails({
   )
 }
 
-/** "Contatti" eyebrow + "Richiedi un preventivo gratuito" + intro text + contact details. */
+/** "Contatti" eyebrow + "Richiedi un preventivo gratuito". */
+function QuoteHeading() {
+  return (
+    <SectionHeading
+      eyebrow="Contatti"
+      title={
+        <>
+          Richiedi un <br className="md:hidden" />
+          preventivo gratuito
+        </>
+      }
+    />
+  )
+}
+
+/** Quote heading + intro text + contact details. */
 export function ContactInfo({ className }: { className?: string }) {
   return (
     <div className={cn("flex flex-col gap-ds-5", className)}>
       <div className="flex flex-col gap-ds-4">
-        <SectionHeading
-          eyebrow="Contatti"
-          title={
-            <>
-              Richiedi un <br className="md:hidden" />
-              preventivo gratuito
-            </>
-          }
-        />
-        <p className="text-body text-muted-foreground">
-          Raccontaci di cosa hai bisogno: ti ricontattiamo entro 24 ore con la
-          soluzione più adatta.
-        </p>
+        <QuoteHeading />
+        <p className="text-body text-muted-foreground">{quoteIntro}</p>
       </div>
       <ContactDetails />
     </div>
@@ -122,27 +128,35 @@ export function ContactFormCard({
 export type ContactSectionVariant = "default" | "vehicle"
 
 /**
- * "Contatti" section (info + form), shared by every page that ends with a quote request.
- * - "default": homepage / Chi siamo (Figma 61:3384)
- * - "vehicle": scheda auto (Figma 87:9861), adds the "Oppure contattaci su Whatsapp" block
+ * "Contatti" section (quote heading + form), shared by every page that ends
+ * with a quote request.
+ * - variant "default": homepage / Chi siamo (Figma 61:3384); "vehicle": scheda
+ *   auto (87:9861), adds the "Oppure contattaci su Whatsapp" block.
+ * - info "full": intro text + contact details next to the form; "heading": the
+ *   heading only (Contatti page 101:10785, which shows the details above).
+ * - `className` / `cardClassName` take the Figma-measured paddings of pages
+ *   whose frames differ (e.g. 96px nested frames on the formula pages).
  */
 export function ContactSection({
   variant = "default",
+  info = "full",
   id = "contatti",
   className,
+  cardClassName,
 }: {
   variant?: ContactSectionVariant
+  info?: "full" | "heading"
   id?: string
   className?: string
+  cardClassName?: string
 }) {
   return (
-    <section id={id} className={cn("bg-secondary py-12 md:py-ds-8", className)}>
-      <div className="container grid gap-ds-5 lg:grid-cols-2 lg:items-start lg:gap-ds-7">
-        <ContactInfo />
-        <ContactFormCard
-          whatsapp={variant === "vehicle" ? "block" : "button"}
-        />
-      </div>
-    </section>
+    <Section id={id} layout="split" className={className}>
+      {info === "full" ? <ContactInfo /> : <QuoteHeading />}
+      <ContactFormCard
+        whatsapp={variant === "vehicle" ? "block" : "button"}
+        className={cardClassName}
+      />
+    </Section>
   )
 }

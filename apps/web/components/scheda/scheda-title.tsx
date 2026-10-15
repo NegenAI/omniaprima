@@ -1,12 +1,11 @@
-import { formulaLabels, type Formula } from "@/lib/vehicles"
+import { formulaLabels, formulaTone, type Formula } from "@/lib/vehicles"
 import { cn } from "@workspace/ui/lib/utils"
 
 /** Formula chip colours: amber for rentals, azzurro for sales (Figma 87:9633 / 87:8872). */
-const formulaBadgeClass: Record<Formula, string> = {
-  "lungo-termine": "bg-ambra text-navy",
-  "breve-termine": "bg-ambra text-navy",
-  vendita: "bg-azzurro text-ghiaccio",
-}
+const toneBadgeClass = {
+  rental: "bg-ambra text-navy",
+  sales: "bg-azzurro text-ghiaccio",
+} as const
 
 /** Short chip labels ("LUNGO TERMINE", "VENDITA"). */
 const formulaBadgeLabel: Record<Formula, string> = {
@@ -36,8 +35,8 @@ export function SchedaTitle({
       <p className="text-h4 text-navy">{subtitle}</p>
       <p
         className={cn(
-          "rounded-[20px] px-2.5 py-[5px] text-sm leading-4 uppercase",
-          formulaBadgeClass[formula]
+          "rounded-card px-2.5 py-[5px] text-caption uppercase",
+          toneBadgeClass[formulaTone(formula)]
         )}
       >
         <span className="sr-only">{formulaLabels[formula]}</span>

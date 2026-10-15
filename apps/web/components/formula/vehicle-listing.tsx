@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { FormulaToggle } from "@/components/formula/formula-toggle"
+import { FormulaToggleLink } from "@/components/formula/formula-toggle"
 import { SectionHeading } from "@/components/section-heading"
 import { VehicleCard } from "@/components/vehicle-card"
 import { byFormula, formulas, type Formula, type Vehicle } from "@/lib/vehicles"
@@ -162,12 +162,17 @@ export function VehicleListing({
   return (
     <section
       id={LISTING_ID}
-      aria-labelledby={text ? `${LISTING_ID}-title` : undefined}
-      aria-label={text ? undefined : "Le nostre proposte"}
+      aria-labelledby={`${LISTING_ID}-title`}
       className={cn("scroll-mt-24 bg-secondary", className)}
     >
       <div className="container">
-        {showFormulaToggle && <FormulaToggle value={formula} />}
+        {/* Proposte has no visible list heading in Figma: keep the outline (H1 → H2 → card H3) for assistive tech. */}
+        {!text && (
+          <h2 id={`${LISTING_ID}-title`} className="sr-only">
+            Le nostre proposte
+          </h2>
+        )}
+        {showFormulaToggle && <FormulaToggleLink value={formula} />}
 
         {text && (
           <div className="flex flex-col gap-4">
@@ -197,7 +202,8 @@ export function VehicleListing({
               <li key={vehicle.slug} className="flex">
                 <VehicleCard
                   vehicle={vehicle}
-                  priority={current === 1 && index === 0}
+                  // Above the fold only on Proposte (no heading block above the list).
+                  priority={!text && current === 1 && index === 0}
                   className="w-full"
                 />
               </li>

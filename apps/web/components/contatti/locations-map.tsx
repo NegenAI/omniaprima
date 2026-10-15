@@ -1,6 +1,5 @@
-import Image from "next/image"
-
 import { cn } from "@workspace/ui/lib/utils"
+import { CroppedImage } from "@/components/cropped-image"
 
 // TODO(business): confirm the Google Maps link (Google Business profile / place URL)
 // and whether an interactive map provider should replace this static image.
@@ -23,16 +22,13 @@ export function LocationsMap({ className }: { className?: string }) {
         className
       )}
     >
-      {/* Figma crop of the original 793×762 map: 192.82% × 193% at -40.08% / -27.21% */}
-      <div className="absolute top-[-27.21%] left-[-40.08%] h-[193%] w-[192.82%]">
-        <Image
-          src="/images/contatti/mappa-sedi.png"
-          alt="Mappa della sede Omnia Prima di San Nicolò a Tordino"
-          fill
-          sizes="(min-width: 1024px) 1200px, 200vw"
-          className="object-cover"
-        />
-      </div>
+      {/* Figma crop of the original 793×762 map */}
+      <CroppedImage
+        src="/images/contatti/mappa-sedi.png"
+        alt="Mappa della sede Omnia Prima di San Nicolò a Tordino"
+        crop={{ width: 192.82, height: 193, left: -40.08, top: -27.21 }}
+        sizes="(min-width: 1024px) 1200px, 200vw"
+      />
     </a>
   )
 }

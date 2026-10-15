@@ -12,10 +12,21 @@ export const cn: CnFunction = createCn({
     },
     classGroups: {
       "font-size": [
-        { text: ["h1", "h2", "h3", "h4", "body", "body-2", "eyebrow"] },
+        {
+          text: [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "body",
+            "body-2",
+            "eyebrow",
+            "caption",
+          ],
+        },
       ],
-      rounded: [{ rounded: ["card"] }],
-      shadow: [{ shadow: ["card", "header", "footer"] }],
+      rounded: [{ rounded: ["card", "image"] }],
+      shadow: [{ shadow: ["card", "panel", "header", "footer"] }],
     },
   },
 })

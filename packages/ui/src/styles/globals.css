@@ -2,9 +2,9 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* The design system is light-only; the variant stays so stock shadcn classes compile. */
 @custom-variant dark (&:is(.dark *));
-@source "../../../apps/**/*.{ts,tsx}";
-@source "../../../components/**/*.{ts,tsx}";
+@source "../../../../apps/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
 /*
@@ -75,9 +75,13 @@
     --color-testo-secondario: #44516b;
     --color-rosso: #eb5757;
     --color-conferma: #1e8a4c;
+    --color-offer: #ff0000; /* "OFFERTA" pulse dot (Component 1, 22:277) */
+    --color-divider: #d9d9d9; /* Figma "Lined Gray" (accordion dividers) */
+    --color-ink: #181818; /* Figma "Dark Gray" (accordion titles) */
 
     /* Elevation (Figma drop shadows) */
     --shadow-card: 0 4px 5px rgb(86 101 116 / 0.1);
+    --shadow-panel: -2px 4px 5px rgb(86 101 116 / 0.1); /* white panels under photos */
     --shadow-header: 0 4px 3.5px rgb(111 110 110 / 0.1);
     --shadow-footer: 0 -4px 5px rgb(86 101 116 / 0.1);
 
@@ -89,6 +93,7 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
     --radius-card: 1.25rem; /* 20px: cards, panels, inputs */
+    --radius-image: 0.625rem; /* 10px: photos, team cards, badges */
     --font-sans: var(--font-sans);
 
     /* Type scale ("Gerarchia Font"): text-h1 … text-body-2 */
@@ -109,6 +114,9 @@
     --text-body-2: var(--type-body-2-size);
     --text-body-2--line-height: var(--type-body-2-leading);
     --text-body-2--font-weight: var(--type-body-2-weight);
+    /* 14/16 caption (labels, notes, chips) at every breakpoint */
+    --text-caption: 0.875rem;
+    --text-caption--line-height: 1rem;
     /* "Bodyb 02": uppercase section eyebrow */
     --text-eyebrow: 0.875rem;
     --text-eyebrow--line-height: 1rem;
@@ -235,45 +243,6 @@
     @media (width >= 96rem) {
         max-width: 80rem;
     }
-}
-
-/* Not in Figma: brand-derived dark theme kept so shadcn components stay usable. */
-.dark {
-    --background: #0d2137;
-    --foreground: #f2f6ff;
-    --card: #14304e;
-    --card-foreground: #f2f6ff;
-    --popover: #14304e;
-    --popover-foreground: #f2f6ff;
-    --primary: #f2f6ff;
-    --primary-hover: #e8eef5;
-    --primary-foreground: #0d2137;
-    --secondary: #1b3a5c;
-    --secondary-hover: #2a5580;
-    --secondary-foreground: #f2f6ff;
-    --muted: #1b3a5c;
-    --muted-foreground: #c8d8e8;
-    --accent: #2a5580;
-    --accent-foreground: #f2f6ff;
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: rgb(200 216 232 / 15%);
-    --input: rgb(200 216 232 / 20%);
-    --ring: #2d97d3;
-    --chart-1: #f2f6ff;
-    --chart-2: #c8d8e8;
-    --chart-3: #2d97d3;
-    --chart-4: #fcb529;
-    --chart-5: #2a5580;
-    --sidebar: #14304e;
-    --sidebar-foreground: #f2f6ff;
-    --sidebar-primary: #2d97d3;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #1b3a5c;
-    --sidebar-accent-foreground: #f2f6ff;
-    --sidebar-border: rgb(200 216 232 / 15%);
-    --sidebar-ring: #2d97d3;
-    --success: #2fa865;
-    --success-foreground: #ffffff;
 }
 
 @layer base {

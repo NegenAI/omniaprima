@@ -3,6 +3,7 @@
 import Image from "next/image"
 import * as React from "react"
 
+import { quoteIntro } from "@/lib/copy"
 import { contact } from "@/lib/site"
 import { Button } from "@workspace/ui/components/button"
 import { Checkbox } from "@workspace/ui/components/checkbox"
@@ -110,10 +111,7 @@ export function ContactWhatsappBlock({ className }: { className?: string }) {
       <div className="flex flex-col gap-3 text-foreground">
         <h3 className="text-h4 font-bold">Oppure contattaci su Whatsapp</h3>
         {/* TODO(copy): Figma repeats the form intro text here; confirm the final WhatsApp copy. */}
-        <p className="text-body">
-          Raccontaci di cosa hai bisogno: ti ricontattiamo entro 24 ore con la
-          soluzione più adatta.
-        </p>
+        <p className="text-body">{quoteIntro}</p>
       </div>
       <ContactWhatsappButton />
     </div>
@@ -140,10 +138,7 @@ export function ContactForm({
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-3 text-foreground">
           <h3>Compila il form</h3>
-          <p className="text-body">
-            Raccontaci di cosa hai bisogno: ti ricontattiamo entro 24 ore con la
-            soluzione più adatta.
-          </p>
+          <p className="text-body">{quoteIntro}</p>
         </div>
         <div className="flex flex-col gap-2">
           <TextField
@@ -191,7 +186,7 @@ export function ContactForm({
               errors.privacy ? "contact-privacy-error" : undefined
             }
           />
-          <span className="text-sm leading-4 text-testo-secondario">
+          <span className="text-caption text-testo-secondario">
             Inserendo i dati nel form di contatto dichiari di aver preso visione
             e di accettare quanto disposto nell’informativa sul trattamento dei
             dati personali, resa ai sensi dell’art. 13 del Regolamento (UE)

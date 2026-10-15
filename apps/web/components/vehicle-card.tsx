@@ -11,6 +11,7 @@ import {
 import { Badge } from "@workspace/ui/components/badge"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
+import { CroppedImage } from "@/components/cropped-image"
 
 export type { Vehicle } from "@/lib/vehicles"
 
@@ -121,28 +122,13 @@ export function VehicleCard({
 
   const photo = (
     <div className="relative aspect-[350/264] overflow-hidden rounded-t-card bg-navy-100">
-      <div
-        className="absolute"
-        style={
-          crop
-            ? {
-                width: `${crop.width}%`,
-                height: `${crop.height}%`,
-                left: `${crop.left}%`,
-                top: `${crop.top}%`,
-              }
-            : { inset: 0 }
-        }
-      >
-        <Image
-          src={vehicle.image.src}
-          alt={vehicle.image.alt}
-          fill
-          priority={priority}
-          sizes="(min-width: 1024px) 560px, (min-width: 768px) 520px, 520px"
-          className="object-cover"
-        />
-      </div>
+      <CroppedImage
+        src={vehicle.image.src}
+        alt={vehicle.image.alt}
+        crop={crop}
+        priority={priority}
+        sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
+      />
     </div>
   )
 
@@ -174,7 +160,7 @@ export function VehicleCard({
 
       <div
         className={cn(
-          "relative flex flex-1 flex-col rounded-b-card bg-white shadow-[-2px_4px_5px_rgb(86_101_116/0.1)]",
+          "relative flex flex-1 flex-col rounded-b-card bg-white shadow-panel",
           panelClass[layout]
         )}
       >
@@ -215,7 +201,7 @@ export function VehicleCard({
             {vehicle.priceNotes.map((note) => (
               <p
                 key={note}
-                className="text-sm leading-4 tracking-[0.05em] text-muted-foreground"
+                className="text-caption tracking-[0.05em] text-muted-foreground"
               >
                 {note}
               </p>

@@ -21,7 +21,7 @@ import { cn } from "@workspace/ui/lib/utils"
  */
 
 /* Figma colour styles not in the token set: "Dark Gray" text, "Lined Gray" divider. */
-const DARK_GRAY = "text-[#181818]"
+const DARK_GRAY = "text-ink"
 
 const accordionVariants = cva(
   "group/accordion flex w-full flex-col overflow-hidden rounded-card",
@@ -30,7 +30,7 @@ const accordionVariants = cva(
       variant: {
         default: "bg-white",
         // 1px gap: Figma's half-pixel #D9D9D9 divider blended over the surface behind (≈ #737D88 on navy).
-        separated: "gap-px bg-[#d9d9d9]/50",
+        separated: "gap-px bg-divider/50",
       },
     },
     defaultVariants: {
@@ -101,12 +101,12 @@ function AccordionTrigger({
           DARK_GRAY,
           // "Lined Gray" divider under the title. Figma centres a 1px #D9D9D9 stroke on the
           // row edge and the next layer covers half of it: it renders as 1px at 50%, inside the 68px row.
-          "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-[#d9d9d9]/50",
+          "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-divider/50",
           // "separated": the last closed row has no divider (Figma showDivider=false).
           "group-data-[variant=separated]/accordion:group-last/accordion-item:not-data-panel-open:after:hidden",
           // "separated" open state: the title/body divider (42:596) has no layer covering it, so the
           // full 1px #D9D9D9 stroke shows (closed rows keep the 50% blend described above).
-          "group-data-[variant=separated]/accordion:data-panel-open:after:bg-[#d9d9d9]",
+          "group-data-[variant=separated]/accordion:data-panel-open:after:bg-divider",
           "focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset",
           "aria-disabled:pointer-events-none aria-disabled:opacity-50",
           className

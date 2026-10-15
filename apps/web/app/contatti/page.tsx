@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 import { ContattiIntro } from "@/components/contatti/contatti-intro"
-import { QuoteRequest } from "@/components/contatti/quote-request"
+import { ContactSection } from "@/components/contact/contact-section"
 
 export const metadata: Metadata = {
   title: "Contatti",
@@ -13,7 +13,7 @@ export default function ContattiPage() {
   return (
     <main className="bg-secondary">
       <ContattiIntro />
-      <QuoteRequest />
+      <ContactSection id="preventivo" info="heading" />
     </main>
   )
 }

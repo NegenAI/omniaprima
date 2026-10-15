@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+import { Section } from "@/components/layout/section"
 import { SectionHeading } from "@/components/section-heading"
 import {
   Accordion,
@@ -96,42 +97,38 @@ export function ServicesIncluded({
   className,
 }: ServicesIncludedProps) {
   return (
-    <section
+    <Section
       id="servizi-inclusi"
-      className={cn("bg-navy py-ds-7 md:py-ds-8", className)}
+      tone="navy"
+      className={className}
+      containerClassName={cn(
+        "flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,640px)] lg:items-start lg:gap-ds-7",
+        variant === "vehicle" ? "gap-2.5 md:gap-ds-5" : "gap-ds-5"
+      )}
     >
-      <div
-        className={cn(
-          "container flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,640px)] lg:items-start lg:gap-ds-7",
-          variant === "vehicle" ? "gap-2.5 md:gap-ds-5" : "gap-ds-5"
-        )}
-      >
-        <SectionHeading
-          tone="dark"
-          eyebrow="Tutto compreso"
-          title="Servizi Inclusi"
-          className="lg:sticky lg:top-28"
-        />
+      <SectionHeading
+        tone="dark"
+        eyebrow="Tutto compreso"
+        title="Servizi Inclusi"
+        className="lg:sticky lg:top-28"
+      />
 
-        <Accordion
-          variant="separated"
-          defaultValue={defaultValue}
-          className="-mx-px w-auto md:mx-0"
-        >
-          {services.map((service) => (
-            <AccordionItem key={service.title} value={service.title}>
-              <AccordionTrigger
-                icon={
-                  <Image src={service.icon} alt="" width={36} height={36} />
-                }
-              >
-                {service.title}
-              </AccordionTrigger>
-              <AccordionContent>{service.body}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-    </section>
+      <Accordion
+        variant="separated"
+        defaultValue={defaultValue}
+        className="-mx-px w-auto md:mx-0"
+      >
+        {services.map((service) => (
+          <AccordionItem key={service.title} value={service.title}>
+            <AccordionTrigger
+              icon={<Image src={service.icon} alt="" width={36} height={36} />}
+            >
+              {service.title}
+            </AccordionTrigger>
+            <AccordionContent>{service.body}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Section>
   )
 }

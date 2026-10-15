@@ -1,9 +1,6 @@
 import type { Metadata } from "next"
 
-import {
-  ContactFormCard,
-  ContactInfo,
-} from "@/components/contact/contact-section"
+import { ContactSection } from "@/components/contact/contact-section"
 import { FormulaBenefits } from "@/components/formula/formula-benefits"
 import { FormulaHero } from "@/components/formula/formula-hero"
 import { ServicesIncluded } from "@/components/formula/services-included"
@@ -46,12 +43,7 @@ export default async function NoleggioLungoTerminePage({
       {/* Contact (125:4257): same content as the homepage section, but the
           Figma frame nests two 48px-padded ghiaccio frames (96px above and
           below) and the form card is 1027px tall (27px bottom inset). */}
-      <section id="contatti" className="bg-secondary py-24 md:py-ds-8">
-        <div className="container grid gap-ds-5 lg:grid-cols-2 lg:items-start lg:gap-ds-7">
-          <ContactInfo />
-          <ContactFormCard className="pb-[27px]" />
-        </div>
-      </section>
+      <ContactSection className="py-24 md:py-ds-8" cardClassName="pb-[27px]" />
     </main>
   )
 }

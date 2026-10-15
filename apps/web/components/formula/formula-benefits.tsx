@@ -1,7 +1,8 @@
 import type { ReactNode } from "react"
 import Image from "next/image"
 
-import type { Formula } from "@/components/formula/formula-hero"
+import { Section } from "@/components/layout/section"
+import type { Formula } from "@/lib/vehicles"
 import { SectionHeading } from "@/components/section-heading"
 import {
   Accordion,
@@ -186,30 +187,29 @@ export function FormulaBenefits({
   const { eyebrow, title, benefits } = formulaBenefits[formula]
 
   return (
-    <section
+    <Section
       aria-labelledby={`perche-conviene-${formula}`}
-      className={cn("bg-secondary pt-ds-7 pb-16 md:py-ds-8", className)}
+      className={cn("pt-ds-7 pb-16", className)}
+      containerClassName="grid gap-ds-5 lg:grid-cols-12 lg:items-start lg:gap-ds-7"
     >
-      <div className="container grid gap-ds-5 lg:grid-cols-12 lg:items-start lg:gap-ds-7">
-        <SectionHeading
-          eyebrow={eyebrow}
-          title={<span id={`perche-conviene-${formula}`}>{title}</span>}
-          className="lg:col-span-5"
-        />
-        <Accordion
-          defaultValue={defaultOpen}
-          className="lg:col-span-7 lg:max-w-[640px] lg:justify-self-end"
-        >
-          {benefits.map((benefit) => (
-            <AccordionItem key={benefit.title} value={benefit.title}>
-              <AccordionTrigger icon={benefit.icon}>
-                {benefit.title}
-              </AccordionTrigger>
-              <AccordionContent>{benefit.body}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-    </section>
+      <SectionHeading
+        eyebrow={eyebrow}
+        title={<span id={`perche-conviene-${formula}`}>{title}</span>}
+        className="lg:col-span-5"
+      />
+      <Accordion
+        defaultValue={defaultOpen}
+        className="lg:col-span-7 lg:max-w-[640px] lg:justify-self-end"
+      >
+        {benefits.map((benefit) => (
+          <AccordionItem key={benefit.title} value={benefit.title}>
+            <AccordionTrigger icon={benefit.icon}>
+              {benefit.title}
+            </AccordionTrigger>
+            <AccordionContent>{benefit.body}</AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Section>
   )
 }

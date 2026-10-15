@@ -13,8 +13,8 @@ function splitPrice(price: string) {
   return { amount: match[1], currency: "€", period: match[2]?.trim() }
 }
 
-const label = "text-sm leading-4 text-muted-foreground uppercase"
-const box = "rounded-[10px] bg-ghiaccio"
+const label = "text-caption text-muted-foreground uppercase"
+const box = "rounded-image bg-ghiaccio"
 
 /**
  * Scheda auto price card (Figma "Frame 447", 87:9636 / 87:8875): white card
@@ -43,7 +43,7 @@ export function PriceCard({
     <section
       aria-label={sale ? "Prezzo" : "Canone"}
       className={cn(
-        "flex flex-col gap-4 rounded-card bg-white px-2.5 py-[15px] shadow-[-2px_4px_5px_rgb(86_101_116/0.1)]",
+        "flex flex-col gap-4 rounded-card bg-white px-2.5 py-[15px] shadow-panel",
         className
       )}
     >
@@ -91,7 +91,7 @@ export function PriceCard({
       </div>
 
       {/* Frame 433: anticipo pill, label and value inset 22.5px */}
-      <div className="flex h-9 items-center justify-between rounded-[20px] bg-ghiaccio px-[22.5px]">
+      <div className="flex h-9 items-center justify-between rounded-card bg-ghiaccio px-[22.5px]">
         <div className="flex items-center gap-2.5">
           <Image
             src="/icons/scheda/anticipo.svg"

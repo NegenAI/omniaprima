@@ -1,9 +1,8 @@
 import type { ReactNode } from "react"
 import Image from "next/image"
 
+import type { Formula } from "@/lib/vehicles"
 import { cn } from "@workspace/ui/lib/utils"
-
-export type Formula = "lungo-termine" | "breve-termine" | "vendita"
 
 type FormulaHeroContent = {
   tone: "dark" | "light"
@@ -117,7 +116,7 @@ export function FormulaHero({
           </div>
 
           <div className="md:w-full md:max-w-[480px] md:justify-self-end">
-            <div className="relative aspect-[348/435] overflow-hidden rounded-[10px] border border-navy-200">
+            <div className="relative aspect-[348/435] overflow-hidden rounded-image border border-navy-200">
               <Image
                 src={image.src}
                 alt={image.alt}

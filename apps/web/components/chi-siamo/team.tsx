@@ -1,3 +1,4 @@
+import { Section } from "@/components/layout/section"
 import { SectionHeading } from "@/components/section-heading"
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card"
 
@@ -6,12 +7,7 @@ const team: TeamMember[] = [
     name: "Simone Pomponii",
     role: "Titolare",
     photo: "/images/chi-siamo/team/simone-pomponii.webp",
-    crop: {
-      top: "-0.15%",
-      left: "-5.27%",
-      width: "117.44%",
-      height: "112.38%",
-    },
+    crop: { width: 117.44, height: 112.38, left: -5.27, top: -0.15 },
   },
   {
     name: "Rosalba Cappelli",
@@ -43,33 +39,36 @@ const team: TeamMember[] = [
 export function Team() {
   return (
     // Mobile: Figma's card grid overflows its content frame by 8px, so the visible bottom space is 40px.
-    <section id="team" className="bg-primary pt-12 pb-10 md:py-ds-8">
-      <div className="container flex flex-col gap-ds-5">
-        <SectionHeading
-          tone="dark"
-          eyebrow="Il team"
-          eyebrowClassName="text-navy-200"
-          title={
-            <>
-              Chi c’è dietro <br className="md:hidden" />
-              Omnia Prima
-            </>
-          }
-        />
-        <p className="text-body text-navy-100 md:max-w-[640px]">
-          Un gruppo di professionisti con esperienza nel mondo automotive,
-          pronti ad ascoltare e trovare la soluzione giusta.
-        </p>
-        {/* Desktop: two rows of three (review feedback 2026-10-15), capped so the
+    <Section
+      id="team"
+      tone="navy"
+      className="pt-12 pb-10"
+      containerClassName="flex flex-col gap-ds-5"
+    >
+      <SectionHeading
+        tone="dark"
+        eyebrow="Il team"
+        eyebrowClassName="text-navy-200"
+        title={
+          <>
+            Chi c’è dietro <br className="md:hidden" />
+            Omnia Prima
+          </>
+        }
+      />
+      <p className="text-body text-navy-100 md:max-w-[640px]">
+        Un gruppo di professionisti con esperienza nel mondo automotive, pronti
+        ad ascoltare e trovare la soluzione giusta.
+      </p>
+      {/* Desktop: two rows of three (review feedback 2026-10-15), capped so the
             cards stay close to the Figma card proportions. */}
-        <ul className="grid grid-cols-2 gap-x-[30px] gap-y-[25px] md:grid-cols-3 lg:max-w-[960px] lg:gap-x-ds-6 lg:gap-y-ds-6">
-          {team.map((member) => (
-            <li key={member.name}>
-              <TeamMemberCard member={member} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+      <ul className="grid grid-cols-2 gap-x-[30px] gap-y-[25px] md:grid-cols-3 lg:max-w-[960px] lg:gap-x-ds-6 lg:gap-y-ds-6">
+        {team.map((member) => (
+          <li key={member.name}>
+            <TeamMemberCard member={member} />
+          </li>
+        ))}
+      </ul>
+    </Section>
   )
 }

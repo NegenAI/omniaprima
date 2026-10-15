@@ -1,8 +1,10 @@
+import * as React from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { usePathname, useRouter } from "@storybook/nextjs-vite/navigation.mock"
 import { fn } from "storybook/test"
 
 import { FormulaToggle } from "@/components/formula/formula-toggle"
+import type { Formula } from "@/lib/vehicles"
 import { VehicleListing } from "@/components/formula/vehicle-listing"
 import { byFormula } from "@/lib/vehicles"
 
@@ -76,11 +78,16 @@ export const SecondPage: Story = {
 }
 
 /** The toggle alone (Frame 388). */
+function ToggleDemo() {
+  const [value, setValue] = React.useState<Formula>("lungo-termine")
+  return <FormulaToggle value={value} onValueChange={setValue} />
+}
+
 export const Toggle: StoryObj<typeof FormulaToggle> = {
   render: () => (
     <div className="bg-secondary p-5">
       <div className="w-[350px] md:w-auto">
-        <FormulaToggle value="lungo-termine" />
+        <ToggleDemo />
       </div>
     </div>
   ),

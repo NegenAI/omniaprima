@@ -37,7 +37,7 @@ export function TechnicalDetails({
               {group.items.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-1 rounded-[20px] border border-navy-200 bg-white py-1 pr-[14px] pl-[9px] text-base leading-5.5 text-navy"
+                  className="flex items-center gap-1 rounded-card border border-navy-200 bg-white py-1 pr-[14px] pl-[9px] text-base leading-5.5 text-navy"
                 >
                   <Image
                     src="/icons/scheda/check.svg"

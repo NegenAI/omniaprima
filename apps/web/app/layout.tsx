@@ -4,7 +4,6 @@ import { Geist_Mono, Inter } from "next/font/google"
 import "@workspace/ui/globals.css"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@workspace/ui/lib/utils"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
@@ -27,7 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="it"
-      suppressHydrationWarning
+
       className={cn(
         "scroll-pt-[78px] antialiased md:scroll-pt-20",
         fontMono.variable,
@@ -36,12 +35,9 @@ export default function RootLayout({
       )}
     >
       <body>
-        {/* The Figma design system is light-only */}
-        <ThemeProvider defaultTheme="light" enableSystem={false}>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </ThemeProvider>
+        <SiteHeader />
+        {children}
+        <SiteFooter />
       </body>
     </html>
   )

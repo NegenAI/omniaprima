@@ -5,6 +5,7 @@ import Image from "next/image"
 
 import type { VehicleImage } from "@/lib/vehicles"
 import { cn } from "@workspace/ui/lib/utils"
+import { CroppedImage } from "@/components/cropped-image"
 
 /**
  * Scheda auto photo gallery (Figma component "Frame 426", 26:2668):
@@ -29,29 +30,14 @@ export function VehicleGallery({
   return (
     <div className={cn("flex flex-col gap-6", className)}>
       <div className="relative h-[260px] overflow-hidden rounded-card bg-navy-100 md:aspect-[351/260] md:h-auto">
-        <div
+        <CroppedImage
           key={current.src}
-          className="absolute"
-          style={
-            crop
-              ? {
-                  width: `${crop.width}%`,
-                  height: `${crop.height}%`,
-                  left: `${crop.left}%`,
-                  top: `${crop.top}%`,
-                }
-              : { inset: 0 }
-          }
-        >
-          <Image
-            src={current.src}
-            alt={current.alt}
-            fill
-            priority
-            sizes="(min-width: 1024px) 720px, (min-width: 768px) 90vw, 100vw"
-            className="object-cover"
-          />
-        </div>
+          src={current.src}
+          alt={current.alt}
+          crop={crop}
+          priority
+          sizes="(min-width: 1024px) 720px, (min-width: 768px) 90vw, 100vw"
+        />
       </div>
 
       {images.length > 1 && (
@@ -68,7 +54,7 @@ export function VehicleGallery({
                   aria-label={`Mostra foto ${index + 1} di ${images.length}`}
                   aria-pressed={active}
                   onClick={() => setSelected(index)}
-                  className="relative block h-16 w-[84px] cursor-pointer overflow-hidden rounded-[10px] bg-navy-100 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:aspect-[84/64] md:h-auto md:w-full"
+                  className="relative block h-16 w-[84px] cursor-pointer overflow-hidden rounded-image bg-navy-100 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:aspect-[84/64] md:h-auto md:w-full"
                 >
                   <Image
                     src={image.src}
@@ -80,7 +66,7 @@ export function VehicleGallery({
                   <span
                     aria-hidden="true"
                     className={cn(
-                      "absolute inset-0 rounded-[10px] border border-transparent transition-colors",
+                      "absolute inset-0 rounded-image border border-transparent transition-colors",
                       active ? "border-ambra" : "hover:border-navy-200"
                     )}
                   />

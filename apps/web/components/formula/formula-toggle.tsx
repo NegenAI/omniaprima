@@ -2,41 +2,33 @@
 
 import { usePathname, useRouter } from "next/navigation"
 
-import { formulaLabels, formulas, type Formula } from "@/lib/vehicles"
+import {
+  formulaLabels,
+  formulas,
+  formulaTone,
+  type Formula,
+} from "@/lib/vehicles"
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@workspace/ui/components/toggle-group"
 import { cn } from "@workspace/ui/lib/utils"
 
-export type FormulaToggleProps = {
-  value: Formula
-  /**
-   * Builds the URL for a formula. Defaults to `?formula=<value>` on the
-   * current path (page 1, `#veicoli` so the list stays in view).
-   */
-  getHref?: (formula: Formula) => string
-  className?: string
-}
-
 /**
- * Formula switch of the "Proposte" listing (Figma 85:831 → Frame 388,
- * I87:8084;87:7259): white 20px card, three 50px pills stacked with 8px gaps,
- * 20px vertical / 8px horizontal padding. Same pattern as the homepage
- * "Le nostre proposte" toggle; here the choice is kept in the URL so the
- * server-rendered list and the pagination follow it.
+ * Formula switch (Figma "Le nostre proposte" 113:2654 and Proposte 85:831 →
+ * Frame 388): white 20px card, three 50px pills stacked with 8px gaps on
+ * mobile, 20px vertical / 8px horizontal padding; one row from md.
+ * Controlled: exactly one formula is always selected.
  */
 export function FormulaToggle({
   value,
-  getHref,
+  onValueChange,
   className,
-}: FormulaToggleProps) {
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const hrefFor =
-    getHref ?? ((formula: Formula) => `${pathname}?formula=${formula}#veicoli`)
-
+}: {
+  value: Formula
+  onValueChange: (formula: Formula) => void
+  className?: string
+}) {
   return (
     <div
       className={cn(
@@ -48,11 +40,8 @@ export function FormulaToggle({
         aria-label="Formula"
         value={[value]}
         onValueChange={(next) => {
-          // Keep one formula selected at all times
           const formula = next[0] as Formula | undefined
-          if (formula && formula !== value) {
-            router.push(hrefFor(formula), { scroll: false })
-          }
+          if (formula && formula !== value) onValueChange(formula)
         }}
         size="pill"
         spacing={2}
@@ -62,7 +51,7 @@ export function FormulaToggle({
           <ToggleGroupItem
             key={formula}
             value={formula}
-            variant={formula === "vendita" ? "sales" : "rental"}
+            variant={formulaTone(formula)}
             className="w-full md:w-auto md:px-ds-5"
           >
             {formulaLabels[formula]}
@@ -70,5 +59,30 @@ export function FormulaToggle({
         ))}
       </ToggleGroup>
     </div>
+  )
+}
+
+/**
+ * FormulaToggle that keeps the choice in the URL (`?formula=…#veicoli`), so
+ * the server-rendered list and its pagination follow it (Proposte page).
+ */
+export function FormulaToggleLink({
+  value,
+  className,
+}: {
+  value: Formula
+  className?: string
+}) {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  return (
+    <FormulaToggle
+      value={value}
+      onValueChange={(formula) =>
+        router.push(`${pathname}?formula=${formula}#veicoli`, { scroll: false })
+      }
+      className={className}
+    />
   )
 }

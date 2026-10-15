@@ -42,7 +42,7 @@ const buttonVariants = cva(
         "icon-lg": "size-9",
         // Compact pill used inside cards at every breakpoint (Figma "Bottone Mobile S", bold label)
         "pill-sm":
-          "gap-1.5 rounded-full px-[15px] py-[9px] text-sm leading-4 font-bold tracking-[0.05em] [&_svg:not([class*='size-'])]:size-3.5",
+          "gap-1.5 rounded-full px-[15px] py-[9px] text-caption font-bold tracking-[0.05em] [&_svg:not([class*='size-'])]:size-3.5",
       },
     },
     defaultVariants: {
