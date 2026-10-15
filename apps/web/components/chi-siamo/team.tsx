@@ -60,7 +60,9 @@ export function Team() {
           Un gruppo di professionisti con esperienza nel mondo automotive,
           pronti ad ascoltare e trovare la soluzione giusta.
         </p>
-        <ul className="grid grid-cols-2 gap-x-[30px] gap-y-[25px] md:grid-cols-3 lg:grid-cols-6">
+        {/* Desktop: two rows of three (review feedback 2026-10-15), capped so the
+            cards stay close to the Figma card proportions. */}
+        <ul className="grid grid-cols-2 gap-x-[30px] gap-y-[25px] md:grid-cols-3 lg:max-w-[960px] lg:gap-x-ds-6 lg:gap-y-ds-6">
           {team.map((member) => (
             <li key={member.name}>
               <TeamMemberCard member={member} />

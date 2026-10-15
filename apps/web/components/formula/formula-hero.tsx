@@ -71,9 +71,11 @@ export const formulaHeroes: Record<Formula, FormulaHeroContent> = {
 /**
  * Hero at the top of the formula pages (noleggio lungo/breve termine, vendita).
  *
- * Mobile (390px Figma frame): 48px vertical padding, a 344px column centred in
- * the viewport — copy block (342px inset 1px on noleggio, 344px on vendita) and a 348×435 photo card that
- * bleeds 2px on each side. Desktop: copy left, photo right.
+ * Mobile: 48px vertical padding; copy and a 348×435-ratio photo card span the
+ * page container, so the edges line up with every other section (review
+ * feedback 2026-10-15; Figma's 344px column made them 3px narrower).
+ * Desktop: copy left, photo right; the light (vendita) hero sits on navy-100 so
+ * it doesn't blend into the ghiaccio section below.
  */
 export function FormulaHero({
   formula,
@@ -90,19 +92,17 @@ export function FormulaHero({
       className={cn(
         // Vendita's copy block is 70px shorter but sits centred in the same
         // fixed-height content box, hence the extra 4.5px on top/bottom.
-        dark ? "bg-navy py-ds-7" : "bg-ghiaccio py-[52.5px]",
+        dark ? "bg-navy py-ds-7" : "bg-ghiaccio py-[52.5px] md:bg-navy-100",
         "md:py-ds-8",
         className
       )}
     >
       <div className="container">
-        <div className="mx-auto flex max-w-[344px] flex-col gap-ds-5 md:grid md:max-w-none md:grid-cols-2 md:items-center md:gap-ds-7">
+        <div className="flex flex-col gap-ds-5 md:grid md:grid-cols-2 md:items-center md:gap-ds-7">
           <div
             className={cn(
-              "flex flex-col gap-ds-4 md:max-w-[560px] md:px-0",
-              // Noleggio copy frames are inset 1px (342 wide); vendita's
-              // spans the full 344px column.
-              dark ? "px-px text-ghiaccio" : "text-foreground"
+              "flex flex-col gap-ds-4 md:max-w-[560px]",
+              dark ? "text-ghiaccio" : "text-foreground"
             )}
           >
             <h1
@@ -116,7 +116,7 @@ export function FormulaHero({
             <p className="text-body">{description}</p>
           </div>
 
-          <div className="-mx-0.5 md:mx-0 md:w-full md:max-w-[480px] md:justify-self-end">
+          <div className="md:w-full md:max-w-[480px] md:justify-self-end">
             <div className="relative aspect-[348/435] overflow-hidden rounded-[10px] border border-navy-200">
               <Image
                 src={image.src}

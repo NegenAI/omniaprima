@@ -14,8 +14,8 @@ import { cn } from "@workspace/ui/lib/utils"
 export type FormulaBenefit = {
   title: string
   icon: ReactNode
-  /** Expanded copy. `null` = not in Figma yet (TODO): the row renders closed and non-toggling. */
-  body: string | null
+  /** Expanded copy shown when the row opens. */
+  body: string
 }
 
 type FormulaBenefitsContent = {
@@ -92,23 +92,40 @@ export const formulaBenefits: Record<Formula, FormulaBenefitsContent> = {
       },
     ],
   },
-  // TODO(copy): Breve Termine bodies are not in Figma (no open states).
+  // TODO(copy-approval): Figma has no open states for Breve Termine and
+  // Vendita. These bodies are DRAFTS written from the page's own claims (hero
+  // copy + row titles) so the rows open; replace with client-approved copy.
   "breve-termine": {
     eyebrow: "Breve termine",
     title: "Perché conviene?",
     benefits: [
-      { title: "Consegna rapida", icon: icons.banknoteBlack, body: null },
-      { title: "Prenotazione last minute", icon: icons.arrows, body: null },
-      { title: "Restituzione flessibile", icon: icons.carShield, body: null },
-      { title: "KM Inclusi", icon: icons.carCycle, body: null },
+      {
+        title: "Consegna rapida",
+        icon: icons.banknoteBlack,
+        body: "Ritiri il veicolo in tempi brevi, già pronto per partire: preparazione, controlli e documenti sono a carico nostro.",
+      },
+      {
+        title: "Prenotazione last minute",
+        icon: icons.arrows,
+        body: "Ti serve un'auto all'ultimo momento? Contattaci: verifichiamo subito la disponibilità e ti rispondiamo in tempi brevi.",
+      },
+      {
+        title: "Restituzione flessibile",
+        icon: icons.carShield,
+        body: "Concordiamo insieme data e modalità di riconsegna, così il noleggio si adatta ai tuoi programmi.",
+      },
+      {
+        title: "KM Inclusi",
+        icon: icons.carCycle,
+        body: "I chilometri inclusi sono indicati in ogni proposta: sai fin da subito quanta strada puoi fare, senza sorprese.",
+      },
       {
         title: "Nessun vincolo contrattuale",
         icon: icons.pencilDoc,
-        body: null,
+        body: "Noleggi per il tempo che ti serve, da pochi giorni a qualche settimana, senza impegni a lungo periodo.",
       },
     ],
   },
-  // TODO(copy): Vendita bodies are not in Figma (no open states).
   vendita: {
     eyebrow: "Vendita",
     title: (
@@ -118,11 +135,31 @@ export const formulaBenefits: Record<Formula, FormulaBenefitsContent> = {
       </>
     ),
     benefits: [
-      { title: "Confronto tra prezzi", icon: icons.banknoteBlack, body: null },
-      { title: "Basato sulle tue esigenze", icon: icons.arrows, body: null },
-      { title: "Consulenza dedicata", icon: icons.carShield, body: null },
-      { title: "Assistenza post-vendita", icon: icons.carCycle, body: null },
-      { title: "Consegna a domicilio", icon: icons.pencilDoc, body: null },
+      {
+        title: "Confronto tra prezzi",
+        icon: icons.banknoteBlack,
+        body: "Ti aiutiamo a confrontare le proposte disponibili con prezzi chiari e trasparenti, così scegli con tutte le informazioni.",
+      },
+      {
+        title: "Basato sulle tue esigenze",
+        icon: icons.arrows,
+        body: "Partiamo da come usi l'auto ogni giorno per proporti i veicoli nuovi o usati più adatti a te.",
+      },
+      {
+        title: "Consulenza dedicata",
+        icon: icons.carShield,
+        body: "Un consulente ti segue in ogni fase, dalla scelta del veicolo al finanziamento su misura.",
+      },
+      {
+        title: "Assistenza post-vendita",
+        icon: icons.carCycle,
+        body: "Anche dopo l'acquisto restiamo il tuo punto di riferimento per qualsiasi necessità legata al veicolo.",
+      },
+      {
+        title: "Consegna a domicilio",
+        icon: icons.pencilDoc,
+        body: "Possiamo consegnare la tua nuova auto direttamente all'indirizzo che preferisci.",
+      },
     ],
   },
 }
@@ -164,23 +201,11 @@ export function FormulaBenefits({
           className="lg:col-span-7 lg:max-w-[640px] lg:justify-self-end"
         >
           {benefits.map((benefit) => (
-            // TODO(copy): rows without a body are disabled so they can't
-            // "open" onto nothing. Base UI uses native `disabled` (no aria-disabled
-            // opacity-50 from the trigger), so the row keeps the Figma look.
-            <AccordionItem
-              key={benefit.title}
-              value={benefit.title}
-              disabled={!benefit.body}
-            >
-              <AccordionTrigger
-                icon={benefit.icon}
-                className="data-disabled:cursor-default"
-              >
+            <AccordionItem key={benefit.title} value={benefit.title}>
+              <AccordionTrigger icon={benefit.icon}>
                 {benefit.title}
               </AccordionTrigger>
-              {benefit.body ? (
-                <AccordionContent>{benefit.body}</AccordionContent>
-              ) : null}
+              <AccordionContent>{benefit.body}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
