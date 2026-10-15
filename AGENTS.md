@@ -68,9 +68,9 @@ Marketing site for Omnia Prima (car rental and sales, Teramo), built by Negen. T
 
 ## Git and delivery
 
-- Work on a branch, never directly on `main`. With a Linear issue: one issue, one branch (issue ID in the branch name), one PR with a change summary and testing steps. Use `Refs <ID>` while deploy and testing are pending; use `Fixes <ID>` only when closing the issue is intended.
+- Commit and push directly to `main`; no feature branches or PRs for this repo (Federico, 2026-10-15). If a Linear issue exists, put `Refs <ID>` in the commit body while deploy and testing are pending; use `Fixes <ID>` only when closing the issue is intended.
 - Commits use the repo-local identity `tech-negen` (GitHub noreply email) and are SSH-signed with the Negen key. The remote uses the `github.com-negen` SSH alias.
-- Do not merge, push to `main`, deploy, or change GitHub/Vercel settings unless explicitly asked in the current request.
+- Push to `main` only when asked in the current request. Do not deploy or change GitHub/Vercel settings unless explicitly asked.
 
 ## Handoff and memory
 
