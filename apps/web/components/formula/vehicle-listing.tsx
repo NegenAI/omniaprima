@@ -3,7 +3,7 @@ import Link from "next/link"
 import { FormulaToggleLink } from "@/components/formula/formula-toggle"
 import { SectionHeading } from "@/components/section-heading"
 import { VehicleCard } from "@/components/vehicle-card"
-import { byFormula, formulas, type Formula, type Vehicle } from "@/lib/vehicles"
+import { formulas, type Formula, type Vehicle } from "@/lib/vehicles"
 import {
   PaginationNav,
   getPaginationHref,
@@ -119,8 +119,8 @@ export type VehicleListingProps = {
   copy?: Partial<VehicleListingCopy> | false
   /** Shows the formula toggle on top (Proposte page, 85:831). */
   showFormulaToggle?: boolean
-  /** Vehicles to list; defaults to every vehicle of `formula`. */
-  vehicles?: Vehicle[]
+  /** Vehicles to list, in display order. */
+  vehicles: Vehicle[]
   className?: string
 }
 
@@ -135,7 +135,7 @@ export function VehicleListing({
   page = 1,
   copy,
   showFormulaToggle = false,
-  vehicles = byFormula(formula),
+  vehicles,
   className,
 }: VehicleListingProps) {
   const pageCount = Math.max(1, Math.ceil(vehicles.length / LISTING_PAGE_SIZE))

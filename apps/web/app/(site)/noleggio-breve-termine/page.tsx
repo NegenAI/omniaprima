@@ -7,7 +7,7 @@ import {
   VehicleListing,
   parseListingParams,
 } from "@/components/formula/vehicle-listing"
-import { byFormula } from "@/lib/vehicles"
+import { getSiteSettings, getVehiclesByFormula } from "@/lib/content"
 
 const BASE_PATH = "/noleggio-breve-termine"
 
@@ -15,22 +15,6 @@ export const metadata: Metadata = {
   title: "Noleggio a breve termine",
   description:
     "Noleggio auto a breve termine con Omnia Prima: un'auto per pochi giorni o settimane, nessun impegno a lungo periodo, assicurazione e assistenza incluse, ritiro immediato.",
-}
-
-/**
- * Figma page 85:1223 lists the cars first (Fiat 500 Hybrid, the Renault
- * Master "OFFERTA", four more Fiat): the aerial platforms featured on the
- * homepage follow them.
- * TODO(business): Figma shows "14 Veicoli disponibili" (3 pages); lib/vehicles
- * only holds 9 breve termine vehicles. Replace with the real inventory, no
- * placeholder vehicles are invented here.
- */
-function breveTermineVehicles() {
-  const all = byFormula("breve-termine")
-  return [
-    ...all.filter((vehicle) => vehicle.category !== "piattaforma"),
-    ...all.filter((vehicle) => vehicle.category === "piattaforma"),
-  ]
 }
 
 /**
@@ -44,6 +28,10 @@ export default async function NoleggioBreveTerminePage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { page } = parseListingParams(await searchParams, "breve-termine")
+  const [vehicles, { contact }] = await Promise.all([
+    getVehiclesByFormula("breve-termine"),
+    getSiteSettings(),
+  ])
 
   return (
     <main className="bg-secondary">
@@ -56,7 +44,7 @@ export default async function NoleggioBreveTerminePage({
         formula="breve-termine"
         basePath={BASE_PATH}
         page={page}
-        vehicles={breveTermineVehicles()}
+        vehicles={vehicles}
       />
 
       {/*
@@ -67,7 +55,10 @@ export default async function NoleggioBreveTerminePage({
        * "CONTATTI" eyebrow; it is kept here as on every other page. The form
        * card ends 96px above the footer (frame 85:1464, 1638px tall).
        */}
-      <ContactSection className="pt-[18.5px] pb-24 md:pt-ds-8 md:pb-ds-8" />
+      <ContactSection
+        contact={contact}
+        className="pt-[18.5px] pb-24 md:pt-ds-8 md:pb-ds-8"
+      />
     </main>
   )
 }

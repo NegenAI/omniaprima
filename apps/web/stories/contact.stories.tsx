@@ -6,6 +6,9 @@ import {
   ContactSection,
 } from "@/components/contact/contact-section"
 import { ContactWhatsappBlock } from "@/components/contact/contact-form"
+import { siteSettingsFixture } from "@/payload/seed/data"
+
+const { contact } = siteSettingsFixture
 
 const meta = {
   title: "Sections/Contact",
@@ -24,20 +27,20 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => <ContactSection />,
+  render: () => <ContactSection contact={contact} />,
 }
 
 export const Vehicle: Story = {
-  render: () => <ContactSection variant="vehicle" />,
+  render: () => <ContactSection contact={contact} variant="vehicle" />,
 }
 
 export const Pieces: Story = {
   render: () => (
     <div className="container flex flex-col gap-ds-5 bg-secondary py-12">
-      <ContactInfo />
-      <ContactFormCard whatsapp="none" />
+      <ContactInfo contact={contact} />
+      <ContactFormCard whatsapp="none" whatsappHref={contact.whatsapp} />
       <div className="rounded-card bg-white p-5">
-        <ContactWhatsappBlock />
+        <ContactWhatsappBlock href={contact.whatsapp} />
       </div>
     </div>
   ),

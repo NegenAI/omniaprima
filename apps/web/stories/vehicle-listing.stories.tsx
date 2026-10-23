@@ -4,9 +4,9 @@ import { usePathname, useRouter } from "@storybook/nextjs-vite/navigation.mock"
 import { fn } from "storybook/test"
 
 import { FormulaToggle } from "@/components/formula/formula-toggle"
-import type { Formula } from "@/lib/vehicles"
 import { VehicleListing } from "@/components/formula/vehicle-listing"
-import { byFormula } from "@/lib/vehicles"
+import type { Formula } from "@/lib/vehicles"
+import { vehicleFixturesByFormula } from "@/payload/seed/data"
 
 const meta = {
   title: "Formula/VehicleListing",
@@ -29,6 +29,7 @@ const meta = {
   },
   args: {
     formula: "lungo-termine",
+    vehicles: vehicleFixturesByFormula("lungo-termine"),
     basePath: "/noleggio-lungo-termine",
     page: 1,
   },
@@ -51,12 +52,20 @@ export const LungoTermine: Story = {}
 
 /** Breve Termine page (85:1223 → 125:4827). */
 export const BreveTermine: Story = {
-  args: { formula: "breve-termine", basePath: "/noleggio-breve-termine" },
+  args: {
+    formula: "breve-termine",
+    vehicles: vehicleFixturesByFormula("breve-termine"),
+    basePath: "/noleggio-breve-termine",
+  },
 }
 
 /** Vendita page (87:3489 → 87:3530). */
 export const Vendita: Story = {
-  args: { formula: "vendita", basePath: "/vendita" },
+  args: {
+    formula: "vendita",
+    vehicles: vehicleFixturesByFormula("vendita"),
+    basePath: "/vendita",
+  },
 }
 
 /** Proposte page (85:831): formula toggle on top, no heading. */
@@ -71,8 +80,11 @@ export const SecondPage: Story = {
     basePath: "/noleggio-breve-termine",
     page: 2,
     vehicles: [
-      ...byFormula("breve-termine"),
-      ...byFormula("breve-termine").map((v) => ({ ...v, slug: `${v.slug}-b` })),
+      ...vehicleFixturesByFormula("breve-termine"),
+      ...vehicleFixturesByFormula("breve-termine").map((v) => ({
+        ...v,
+        slug: `${v.slug}-b`,
+      })),
     ],
   },
 }

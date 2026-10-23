@@ -6,6 +6,7 @@ import {
   parseListingParams,
 } from "@/components/formula/vehicle-listing"
 import { ProposteIntro } from "@/components/proposte/proposte-intro"
+import { getSiteSettings, getVehiclesByFormula } from "@/lib/content"
 
 export const metadata: Metadata = {
   title: "Tutte le proposte",
@@ -24,18 +25,23 @@ export default async function PropostePage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { formula, page } = parseListingParams(await searchParams)
+  const [vehicles, { contact }] = await Promise.all([
+    getVehiclesByFormula(formula),
+    getSiteSettings(),
+  ])
 
   return (
     <main className="bg-secondary">
       <ProposteIntro />
       <VehicleListing
         formula={formula}
+        vehicles={vehicles}
         page={page}
         basePath="/proposte"
         copy={false}
         showFormulaToggle
       />
-      <ContactSection />
+      <ContactSection contact={contact} />
     </main>
   )
 }

@@ -8,41 +8,23 @@ import { RelatedVehicles } from "@/components/scheda/related-vehicles"
 import { SchedaTitle } from "@/components/scheda/scheda-title"
 import { TechnicalDetails } from "@/components/scheda/technical-details"
 import { VehicleGallery } from "@/components/scheda/vehicle-gallery"
-import {
-  bySlug,
-  formulaLabels,
-  hasDetailPage,
-  vehicles,
-  type Vehicle,
-} from "@/lib/vehicles"
+import { getSiteSettings, getVehicle, getVehicles } from "@/lib/content"
+import { formulaLabels, hasDetailPage, relatedVehicles } from "@/lib/vehicles"
 import { cn } from "@workspace/ui/lib/utils"
 
 type Params = { slug: string }
 
 /** Vehicles with a scheda page: long-term rentals and sales (not short-term). */
-function schedaVehicle(slug: string) {
-  const vehicle = bySlug(slug)
+async function schedaVehicle(slug: string) {
+  const vehicle = await getVehicle(slug)
   return vehicle && hasDetailPage(vehicle) && vehicle.details
     ? { ...vehicle, details: vehicle.details }
     : undefined
 }
 
-/** Same-formula vehicles, plain cards (no "OFFERTA" flag) first. */
-function relatedTo(vehicle: Vehicle) {
-  return vehicles
-    .filter(
-      (other) =>
-        other.slug !== vehicle.slug &&
-        other.formula === vehicle.formula &&
-        hasDetailPage(other)
-    )
-    .sort((a, b) => Number(Boolean(a.offer)) - Number(Boolean(b.offer)))
-}
-
-export const dynamicParams = false
-
-export function generateStaticParams(): Params[] {
-  return vehicles
+// Vehicles published after the build render on their first visit.
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await getVehicles())
     .filter((vehicle) => hasDetailPage(vehicle) && vehicle.details)
     .map((vehicle) => ({ slug: vehicle.slug }))
 }
@@ -53,7 +35,7 @@ export async function generateMetadata({
   params: Promise<Params>
 }): Promise<Metadata> {
   const { slug } = await params
-  const vehicle = schedaVehicle(slug)
+  const vehicle = await schedaVehicle(slug)
   if (!vehicle) return {}
 
   return {
@@ -81,8 +63,12 @@ export default async function SchedaAutoPage({
   params: Promise<Params>
 }) {
   const { slug } = await params
-  const vehicle = schedaVehicle(slug)
+  const vehicle = await schedaVehicle(slug)
   if (!vehicle) notFound()
+  const [vehicles, { contact }] = await Promise.all([
+    getVehicles(),
+    getSiteSettings(),
+  ])
 
   const gallery = vehicle.gallery?.length ? vehicle.gallery : undefined
   const spacing =
@@ -141,10 +127,17 @@ export default async function SchedaAutoPage({
 
       <ServicesIncluded variant="vehicle" />
 
-      <ContactSection variant="vehicle" className="pb-0 md:pb-0" />
+      <ContactSection
+        contact={contact}
+        variant="vehicle"
+        className="pb-0 md:pb-0"
+      />
 
       <div className="bg-secondary pt-ds-8 pb-12 md:pb-ds-8">
-        <RelatedVehicles vehicles={relatedTo(vehicle)} className="container" />
+        <RelatedVehicles
+          vehicles={relatedVehicles(vehicles, vehicle)}
+          className="container"
+        />
       </div>
     </main>
   )

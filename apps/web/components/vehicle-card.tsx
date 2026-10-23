@@ -1,7 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { CroppedImage } from "@/components/cropped-image"
 import { OfferFlag } from "@/components/offer-flag"
+import { focalPosition } from "@/lib/media"
 import {
   hasDetailPage,
   vehicleHref,
@@ -11,7 +13,6 @@ import {
 import { Badge } from "@workspace/ui/components/badge"
 import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
-import { CroppedImage } from "@/components/cropped-image"
 
 export type { Vehicle } from "@/lib/vehicles"
 
@@ -118,14 +119,13 @@ export function VehicleCard({
   const href = vehicleHref(vehicle)
   const detail = hasDetailPage(vehicle)
   const action = cta[layout]
-  const crop = vehicle.image.crop
 
   const photo = (
     <div className="relative aspect-[350/264] overflow-hidden rounded-t-card bg-navy-100">
       <CroppedImage
         src={vehicle.image.src}
         alt={vehicle.image.alt}
-        crop={crop}
+        style={focalPosition(vehicle.image)}
         priority={priority}
         sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
       />

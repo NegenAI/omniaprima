@@ -7,3 +7,24 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
   msw: false
+
+minimumReleaseAgeExclude:
+  - "@payloadcms/db-postgres@3.92.0"
+  - "@payloadcms/drizzle@3.92.0"
+  - "@payloadcms/graphql@3.92.0"
+  - "@payloadcms/next@3.92.0"
+  - "@payloadcms/plugin-cloud-storage@3.92.0"
+  - "@payloadcms/storage-vercel-blob@3.92.0"
+  - "@payloadcms/translations@3.92.0"
+  - "@payloadcms/ui@3.92.0"
+  - payload@3.92.0
+  - "@next/env@16.4.3"
+  - "@next/swc-darwin-arm64@16.4.3"
+  - "@next/swc-darwin-x64@16.4.3"
+  - "@next/swc-linux-arm64-gnu@16.4.3"
+  - "@next/swc-linux-arm64-musl@16.4.3"
+  - "@next/swc-linux-x64-gnu@16.4.3"
+  - "@next/swc-linux-x64-musl@16.4.3"
+  - "@next/swc-win32-arm64-msvc@16.4.3"
+  - "@next/swc-win32-x64-msvc@16.4.3"
+  - next@16.4.3

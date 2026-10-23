@@ -2,41 +2,8 @@ import { Section } from "@/components/layout/section"
 import { SectionHeading } from "@/components/section-heading"
 import { TeamMemberCard, type TeamMember } from "@/components/team-member-card"
 
-const team: TeamMember[] = [
-  {
-    name: "Simone Pomponii",
-    role: "Titolare",
-    photo: "/images/chi-siamo/team/simone-pomponii.webp",
-    crop: { width: 117.44, height: 112.38, left: -5.27, top: -0.15 },
-  },
-  {
-    name: "Rosalba Cappelli",
-    role: "Front Office",
-    photo: "/images/chi-siamo/team/rosalba-cappelli.webp",
-  },
-  {
-    name: "Pasquale Nolli",
-    role: "Senior Sales",
-    photo: "/images/chi-siamo/team/pasquale-nolli.webp",
-  },
-  {
-    name: "Marco Varani",
-    role: "Service Advisor",
-    photo: "/images/chi-siamo/team/marco-varani.webp",
-  },
-  {
-    name: "Valeria Di Antonio",
-    role: "Back Office",
-    photo: "/images/chi-siamo/team/valeria-di-antonio.webp",
-  },
-  {
-    name: "Daniel Di Ottavio",
-    role: "After Sales Assistant",
-    photo: "/images/chi-siamo/team/daniel-di-ottavio.webp",
-  },
-]
-
-export function Team() {
+/** Team grid of the Chi siamo page; members and order come from the admin. */
+export function Team({ members }: { members: TeamMember[] }) {
   return (
     // Mobile: Figma's card grid overflows its content frame by 8px, so the visible bottom space is 40px.
     <Section
@@ -60,10 +27,12 @@ export function Team() {
         Un gruppo di professionisti con esperienza nel mondo automotive, pronti
         ad ascoltare e trovare la soluzione giusta.
       </p>
-      {/* Desktop: two rows of three (review feedback 2026-10-15), capped so the
-            cards stay close to the Figma card proportions. */}
-      <ul className="grid grid-cols-2 gap-x-[30px] gap-y-[25px] md:grid-cols-3 lg:max-w-[960px] lg:gap-x-ds-6 lg:gap-y-ds-6">
-        {team.map((member) => (
+      {/* Desktop: two rows of three (review feedback 2026-10-15). Cards are
+            capped at 288px (their size in a 960px grid) so they stay close to
+            the Figma card proportions; the grid spans the container and the
+            leftover width goes into the gaps between columns. */}
+      <ul className="grid grid-cols-2 gap-x-[30px] gap-y-[25px] md:grid-cols-3 lg:grid-cols-[repeat(3,minmax(0,288px))] lg:justify-between lg:gap-x-ds-6 lg:gap-y-ds-6">
+        {members.map((member) => (
           <li key={member.name}>
             <TeamMemberCard member={member} />
           </li>

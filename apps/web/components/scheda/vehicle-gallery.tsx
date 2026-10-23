@@ -3,9 +3,10 @@
 import * as React from "react"
 import Image from "next/image"
 
+import { CroppedImage } from "@/components/cropped-image"
+import { focalPosition } from "@/lib/media"
 import type { VehicleImage } from "@/lib/vehicles"
 import { cn } from "@workspace/ui/lib/utils"
-import { CroppedImage } from "@/components/cropped-image"
 
 /**
  * Scheda auto photo gallery (Figma component "Frame 426", 26:2668):
@@ -25,7 +26,6 @@ export function VehicleGallery({
   const current = images[selected] ?? images[0]
 
   if (!current) return null
-  const crop = current.galleryCrop
 
   return (
     <div className={cn("flex flex-col gap-6", className)}>
@@ -34,7 +34,7 @@ export function VehicleGallery({
           key={current.src}
           src={current.src}
           alt={current.alt}
-          crop={crop}
+          style={focalPosition(current)}
           priority
           sizes="(min-width: 1024px) 720px, (min-width: 768px) 90vw, 100vw"
         />
@@ -62,6 +62,7 @@ export function VehicleGallery({
                     fill
                     sizes="(min-width: 768px) 180px, 84px"
                     className="object-cover"
+                    style={focalPosition(image)}
                   />
                   <span
                     aria-hidden="true"

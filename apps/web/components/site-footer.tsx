@@ -2,9 +2,16 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Logo } from "@/components/logo"
-import { contact, footerLinks, socials } from "@/lib/site"
+import { footerLinks, type SiteContact, type SiteSocial } from "@/lib/site"
 
-export function SiteFooter() {
+export function SiteFooter({
+  contact,
+  socials,
+}: {
+  /** Business details from the site settings. */
+  contact: SiteContact
+  socials: SiteSocial[]
+}) {
   return (
     <footer className="bg-secondary pt-[30px] pb-[34px] text-foreground shadow-footer md:pt-ds-7 md:pb-ds-6">
       <div className="container grid gap-ds-5 md:grid-cols-[1fr_auto] md:gap-ds-7">

@@ -4,11 +4,17 @@ import Link from "next/link"
 import { Section } from "@/components/layout/section"
 import { GoogleRating } from "@/components/google-rating"
 import { SectionHeading } from "@/components/section-heading"
+import type { SiteSettings } from "@/lib/site"
 import { Button } from "@workspace/ui/components/button"
 
 // Mobile offsets are measured from the Figma frame (its first 5px sit under the
 // header and its background runs 25px past the content box).
-export function Story() {
+export function Story({
+  googleReviews,
+}: {
+  /** Rating badge on the photo; hidden until it is set in the admin. */
+  googleReviews?: SiteSettings["googleReviews"]
+}) {
   return (
     <Section
       className="pt-[43px] pb-[73px]"
@@ -48,7 +54,12 @@ export function Story() {
             className="object-cover"
           />
         </div>
-        <GoogleRating className="absolute right-0 bottom-0" />
+        {googleReviews && (
+          <GoogleRating
+            {...googleReviews}
+            className="absolute right-0 bottom-0"
+          />
+        )}
       </div>
 
       <Button

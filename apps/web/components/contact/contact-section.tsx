@@ -7,56 +7,60 @@ import {
 import { Section } from "@/components/layout/section"
 import { SectionHeading } from "@/components/section-heading"
 import { quoteIntro } from "@/lib/copy"
-import { contact } from "@/lib/site"
+import type { SiteContact } from "@/lib/site"
 import { cn } from "@workspace/ui/lib/utils"
 
-const details = [
-  {
-    key: "phone",
-    label: "Telefono",
-    icon: "/icons/call.svg",
-    content: (
-      <a href={contact.phone.href} className="hover:underline">
-        {contact.phone.label}
-      </a>
-    ),
-  },
-  {
-    key: "email",
-    label: "Email",
-    icon: "/icons/mail.svg",
-    content: (
-      <a href={contact.email.href} className="hover:underline">
-        {contact.email.label}
-      </a>
-    ),
-  },
-  {
-    key: "locations",
-    label: "Sedi",
-    icon: "/icons/location.svg",
-    content: contact.locations.map((location) => (
-      <span key={location.town} className="block">
-        {location.town}, {location.street}
-      </span>
-    )),
-  },
-]
+function contactDetails(contact: SiteContact) {
+  return [
+    {
+      key: "phone",
+      label: "Telefono",
+      icon: "/icons/call.svg",
+      content: (
+        <a href={contact.phone.href} className="hover:underline">
+          {contact.phone.label}
+        </a>
+      ),
+    },
+    {
+      key: "email",
+      label: "Email",
+      icon: "/icons/mail.svg",
+      content: (
+        <a href={contact.email.href} className="hover:underline">
+          {contact.email.label}
+        </a>
+      ),
+    },
+    {
+      key: "locations",
+      label: "Sedi",
+      icon: "/icons/location.svg",
+      content: contact.locations.map((location) => (
+        <span key={location.town} className="block">
+          {location.town}, {location.street}
+        </span>
+      )),
+    },
+  ]
+}
 
 export type ContactDetailKey = "phone" | "email" | "locations"
 
 /** Phone / e-mail / locations list with icons (Figma "Frame 419"). */
 export function ContactDetails({
+  contact,
   items = ["phone", "email", "locations"],
   className,
 }: {
+  contact: SiteContact
   /** Which rows to show (the Contatti page splits the locations out). */
   items?: ContactDetailKey[]
   className?: string
 }) {
   return (
     <dl className={cn("flex flex-col gap-ds-4", className)}>
-      {details
+      {contactDetails(contact)
         .filter((detail) => items.includes(detail.key as ContactDetailKey))
         .map((detail) => (
           <div key={detail.label} className="flex items-center gap-6">
@@ -91,14 +95,20 @@ function QuoteHeading() {
 }
 
 /** Quote heading + intro text + contact details. */
-export function ContactInfo({ className }: { className?: string }) {
+export function ContactInfo({
+  contact,
+  className,
+}: {
+  contact: SiteContact
+  className?: string
+}) {
   return (
     <div className={cn("flex flex-col gap-ds-5", className)}>
       <div className="flex flex-col gap-ds-4">
         <QuoteHeading />
         <p className="text-body text-muted-foreground">{quoteIntro}</p>
       </div>
-      <ContactDetails />
+      <ContactDetails contact={contact} />
     </div>
   )
 }
@@ -106,9 +116,12 @@ export function ContactInfo({ className }: { className?: string }) {
 /** White card wrapping the contact form (Figma "Frame 424"). */
 export function ContactFormCard({
   whatsapp = "button",
+  whatsappHref,
   className,
 }: {
   whatsapp?: ContactFormWhatsapp
+  /** wa.me link from the site settings. */
+  whatsappHref: string
   className?: string
 }) {
   return (
@@ -120,7 +133,7 @@ export function ContactFormCard({
         className
       )}
     >
-      <ContactForm whatsapp={whatsapp} />
+      <ContactForm whatsapp={whatsapp} whatsappHref={whatsappHref} />
     </div>
   )
 }
@@ -138,12 +151,15 @@ export type ContactSectionVariant = "default" | "vehicle"
  *   whose frames differ (e.g. 96px nested frames on the formula pages).
  */
 export function ContactSection({
+  contact,
   variant = "default",
   info = "full",
   id = "contatti",
   className,
   cardClassName,
 }: {
+  /** Business details from the site settings. */
+  contact: SiteContact
   variant?: ContactSectionVariant
   info?: "full" | "heading"
   id?: string
@@ -152,8 +168,9 @@ export function ContactSection({
 }) {
   return (
     <Section id={id} layout="split" className={className}>
-      {info === "full" ? <ContactInfo /> : <QuoteHeading />}
+      {info === "full" ? <ContactInfo contact={contact} /> : <QuoteHeading />}
       <ContactFormCard
+        whatsappHref={contact.whatsapp}
         whatsapp={variant === "vehicle" ? "block" : "button"}
         className={cardClassName}
       />

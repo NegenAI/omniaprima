@@ -3,6 +3,9 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { ContattiIntro } from "@/components/contatti/contatti-intro"
 import { LocationsMap } from "@/components/contatti/locations-map"
 import { ContactSection } from "@/components/contact/contact-section"
+import { siteSettingsFixture } from "@/payload/seed/data"
+
+const { contact } = siteSettingsFixture
 
 const meta = {
   title: "Pages/Contatti",
@@ -23,18 +26,20 @@ type Story = StoryObj<typeof meta>
 export const Page: Story = {
   render: () => (
     <main className="bg-secondary">
-      <ContattiIntro />
-      <ContactSection id="preventivo" info="heading" />
+      <ContattiIntro contact={contact} />
+      <ContactSection contact={contact} id="preventivo" info="heading" />
     </main>
   ),
 }
 
 export const Intro: Story = {
-  render: () => <ContattiIntro />,
+  render: () => <ContattiIntro contact={contact} />,
 }
 
 export const Quote: Story = {
-  render: () => <ContactSection id="preventivo" info="heading" />,
+  render: () => (
+    <ContactSection contact={contact} id="preventivo" info="heading" />
+  ),
 }
 
 export const StaticMap: Story = {

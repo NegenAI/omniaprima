@@ -1,36 +1,98 @@
-// Business details and navigation, as shown in the Figma homepage.
+// Navigation is part of the code (it follows the routes); business details
+// are edited in the admin (Payload global "site-settings") and mapped here.
 
-export const contact = {
-  phone: { label: "0861 415616", href: "tel:+390861415616" },
-  // The contact section and the footer show different addresses in Figma.
-  email: {
-    label: "omniaprimasrl@gmail.com",
-    href: "mailto:omniaprimasrl@gmail.com",
-  },
-  footerEmail: {
-    label: "info@omniaprima.it",
-    href: "mailto:info@omniaprima.it",
-  },
-  // TODO: confirm the WhatsApp number (Figma only shows the landline).
-  whatsapp: "https://wa.me/390861415616",
-  locations: [
-    { town: "San Nicolò a Tordino", street: "Via Nazionale" },
-    { town: "Castelnuovo Vomano", street: "Via Nazionale 1" },
-  ],
-  hours: "8.30 - 12.30 |  15.00 - 19.00",
+export type SiteContact = {
+  phone: { label: string; href: string }
+  email: { label: string; href: string }
+  footerEmail: { label: string; href: string }
+  /** wa.me link of the WhatsApp number. */
+  whatsapp: string
+  locations: { town: string; street: string }[]
+  hours: string
 }
 
-// TODO: real profile URLs (not in Figma).
-export const socials = [
-  { label: "Facebook", href: "#", icon: "/icons/facebook.svg", width: 24 },
-  { label: "Instagram", href: "#", icon: "/icons/instagram.svg", width: 24 },
-  {
-    label: "WhatsApp",
-    href: contact.whatsapp,
-    icon: "/icons/whatsapp-social.svg",
-    width: 23.89,
-  },
-]
+export type SiteSocial = {
+  label: string
+  href: string
+  icon: string
+  width: number
+}
+
+export type SiteSettings = {
+  contact: SiteContact
+  socials: SiteSocial[]
+  /** Absent until the rating and its link are set in the admin. */
+  googleReviews?: { rating: string; href: string }
+}
+
+/**
+ * The "site-settings" global as Payload returns it (the fields the site
+ * uses). Every field can be empty on a database that was never filled in.
+ */
+export type SiteSettingsSource = {
+  phone?: string | null
+  whatsapp?: string | null
+  email?: string | null
+  footerEmail?: string | null
+  hours?: string | null
+  locations?: { town: string; street: string }[] | null
+  facebook?: string | null
+  instagram?: string | null
+  googleRating?: string | null
+  googleReviewsUrl?: string | null
+}
+
+const digits = (value: string) => value.replace(/\D/g, "")
+
+/** "0861 415616" → "tel:+390861415616"; numbers with a "+" keep their prefix. */
+function telHref(phone: string) {
+  return phone.trim().startsWith("+")
+    ? `tel:+${digits(phone)}`
+    : `tel:+39${digits(phone)}`
+}
+
+export function toSiteSettings(source: SiteSettingsSource): SiteSettings {
+  const phone = source.phone ?? ""
+  const email = source.email ?? ""
+  const footerEmail = source.footerEmail ?? ""
+  const whatsapp = `https://wa.me/${digits(source.whatsapp ?? "")}`
+  return {
+    contact: {
+      phone: { label: phone, href: telHref(phone) },
+      email: { label: email, href: `mailto:${email}` },
+      footerEmail: { label: footerEmail, href: `mailto:${footerEmail}` },
+      whatsapp,
+      locations: source.locations ?? [],
+      hours: source.hours ?? "",
+    },
+    // TODO(data): Facebook and Instagram profile URLs (not in Figma); the
+    // icons link to "#" until they are set in the admin.
+    socials: [
+      {
+        label: "Facebook",
+        href: source.facebook || "#",
+        icon: "/icons/facebook.svg",
+        width: 24,
+      },
+      {
+        label: "Instagram",
+        href: source.instagram || "#",
+        icon: "/icons/instagram.svg",
+        width: 24,
+      },
+      {
+        label: "WhatsApp",
+        href: whatsapp,
+        icon: "/icons/whatsapp-social.svg",
+        width: 23.89,
+      },
+    ],
+    googleReviews:
+      source.googleRating && source.googleReviewsUrl
+        ? { rating: source.googleRating, href: source.googleReviewsUrl }
+        : undefined,
+  }
+}
 
 export type SiteLink = { label: string; href: string }
 
@@ -54,9 +116,3 @@ export const footerLinks: SiteLink[] = [
   { label: "Vendita", href: "/vendita" },
   { label: "Contatti", href: "/contatti" },
 ]
-
-// TODO: confirm the Google Business profile link and whether the rating should be live.
-export const googleReviews = {
-  rating: "4.9/5",
-  href: "https://www.google.com/search?q=Omnia+Prima+srl+-+VENDITA+E+NOLEGGIO+Recensioni",
-}

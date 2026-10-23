@@ -5,13 +5,10 @@ import { RelatedVehicles } from "@/components/scheda/related-vehicles"
 import { SchedaTitle } from "@/components/scheda/scheda-title"
 import { TechnicalDetails } from "@/components/scheda/technical-details"
 import { VehicleGallery } from "@/components/scheda/vehicle-gallery"
-import { byFormula, bySlug, type Vehicle } from "@/lib/vehicles"
-
-const vehicle = (slug: string): Vehicle => {
-  const found = bySlug(slug)
-  if (!found) throw new Error(`Unknown vehicle ${slug}`)
-  return found
-}
+import {
+  vehicleFixture as vehicle,
+  vehicleFixturesByFormula,
+} from "@/payload/seed/data"
 
 const lungo = vehicle("fiat-500-hybrid-2")
 const vendita = vehicle("fiat-500-hybrid-vendita-2")
@@ -93,7 +90,9 @@ export const CaratteristicheAuto: Story = {
 export const PotrebbePiacertiAnche: Story = {
   render: () => (
     <RelatedVehicles
-      vehicles={byFormula("vendita").filter((v) => v.slug !== vendita.slug)}
+      vehicles={vehicleFixturesByFormula("vendita").filter(
+        (v) => v.slug !== vendita.slug
+      )}
     />
   ),
 }

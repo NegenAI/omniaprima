@@ -4,6 +4,7 @@ import { Geist_Mono, Inter } from "next/font/google"
 import "@workspace/ui/globals.css"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { getSiteSettings } from "@/lib/content"
 import { cn } from "@workspace/ui/lib/utils"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
@@ -18,11 +19,13 @@ export const metadata: Metadata = {
   description: "Noleggio e vendita auto a Teramo",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { contact, socials } = await getSiteSettings()
+
   return (
     <html
       lang="it"
@@ -37,7 +40,7 @@ export default function RootLayout({
       <body>
         <SiteHeader />
         {children}
-        <SiteFooter />
+        <SiteFooter contact={contact} socials={socials} />
       </body>
     </html>
   )

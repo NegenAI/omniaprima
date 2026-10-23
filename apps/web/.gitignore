@@ -1,0 +1,6 @@
+# Payload: local uploads (development)
+/media
+
+# Committed env files (1Password references, variable names only)
+!.env.op
+!.env.example

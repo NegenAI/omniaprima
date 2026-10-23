@@ -4,7 +4,6 @@ import Image from "next/image"
 import * as React from "react"
 
 import { quoteIntro } from "@/lib/copy"
-import { contact } from "@/lib/site"
 import { Button } from "@workspace/ui/components/button"
 import { Checkbox } from "@workspace/ui/components/checkbox"
 import { Input } from "@workspace/ui/components/input"
@@ -89,13 +88,20 @@ function TextField({
 export type ContactFormWhatsapp = "button" | "block" | "none"
 
 /** Green "Contattaci" WhatsApp button (Figma "Bottone Mobile", conferma fill). */
-export function ContactWhatsappButton({ className }: { className?: string }) {
+export function ContactWhatsappButton({
+  href,
+  className,
+}: {
+  /** wa.me link from the site settings. */
+  href: string
+  className?: string
+}) {
   return (
     <Button
       variant="success"
       size="lg"
       className={cn("w-full gap-2.5", className)}
-      render={<a href={contact.whatsapp} target="_blank" rel="noreferrer" />}
+      render={<a href={href} target="_blank" rel="noreferrer" />}
       nativeButton={false}
     >
       Contattaci
@@ -105,7 +111,14 @@ export function ContactWhatsappButton({ className }: { className?: string }) {
 }
 
 /** "Oppure contattaci su Whatsapp" heading + text + button (scheda auto, Figma 87:9903). */
-export function ContactWhatsappBlock({ className }: { className?: string }) {
+export function ContactWhatsappBlock({
+  href,
+  className,
+}: {
+  /** wa.me link from the site settings. */
+  href: string
+  className?: string
+}) {
   return (
     <div className={cn("flex flex-col gap-6", className)}>
       <div className="flex flex-col gap-3 text-foreground">
@@ -113,15 +126,18 @@ export function ContactWhatsappBlock({ className }: { className?: string }) {
         {/* TODO(copy): Figma repeats the form intro text here; confirm the final WhatsApp copy. */}
         <p className="text-body">{quoteIntro}</p>
       </div>
-      <ContactWhatsappButton />
+      <ContactWhatsappButton href={href} />
     </div>
   )
 }
 
 export function ContactForm({
   whatsapp = "button",
+  whatsappHref,
 }: {
   whatsapp?: ContactFormWhatsapp
+  /** wa.me link from the site settings. */
+  whatsappHref: string
 }) {
   const [errors, setErrors] = React.useState<Errors>({})
 
@@ -199,8 +215,8 @@ export function ContactForm({
       <Button type="submit" size="lg" className="w-full">
         Invia Richiesta
       </Button>
-      {whatsapp === "button" && <ContactWhatsappButton />}
-      {whatsapp === "block" && <ContactWhatsappBlock />}
+      {whatsapp === "button" && <ContactWhatsappButton href={whatsappHref} />}
+      {whatsapp === "block" && <ContactWhatsappBlock href={whatsappHref} />}
     </form>
   )
 }

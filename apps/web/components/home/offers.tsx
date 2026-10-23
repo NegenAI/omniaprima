@@ -1,9 +1,15 @@
 import { FeaturedOffers } from "@/components/home/featured-offers"
 import { Section } from "@/components/layout/section"
 import { SectionHeading } from "@/components/section-heading"
+import type { Formula, Vehicle } from "@/lib/vehicles"
 
 /** Homepage "Le nostre proposte" (Figma 26:516). */
-export function Offers() {
+export function Offers({
+  vehicles,
+}: {
+  /** Featured vehicles of each formula. */
+  vehicles: Record<Formula, Vehicle[]>
+}) {
   return (
     <Section
       id="proposte"
@@ -21,7 +27,7 @@ export function Offers() {
         }
         className="w-full"
       />
-      <FeaturedOffers />
+      <FeaturedOffers vehicles={vehicles} />
     </Section>
   )
 }

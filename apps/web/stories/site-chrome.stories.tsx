@@ -4,6 +4,7 @@ import { userEvent, within } from "storybook/test"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { siteSettingsFixture } from "@/payload/seed/data"
 
 const meta: Meta = {
   title: "Layout/Site chrome",
@@ -42,5 +43,10 @@ export const MobileMenuOpen: Story = {
 }
 
 export const Footer: Story = {
-  render: () => <SiteFooter />,
+  render: () => (
+    <SiteFooter
+      contact={siteSettingsFixture.contact}
+      socials={siteSettingsFixture.socials}
+    />
+  ),
 }

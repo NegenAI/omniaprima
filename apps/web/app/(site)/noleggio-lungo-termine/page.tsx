@@ -8,6 +8,7 @@ import {
   VehicleListing,
   parseListingParams,
 } from "@/components/formula/vehicle-listing"
+import { getSiteSettings, getVehiclesByFormula } from "@/lib/content"
 
 const BASE_PATH = "/noleggio-lungo-termine"
 
@@ -28,6 +29,10 @@ export default async function NoleggioLungoTerminePage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { page } = parseListingParams(await searchParams, "lungo-termine")
+  const [vehicles, { contact }] = await Promise.all([
+    getVehiclesByFormula("lungo-termine"),
+    getSiteSettings(),
+  ])
 
   return (
     <main>
@@ -35,6 +40,7 @@ export default async function NoleggioLungoTerminePage({
       <FormulaBenefits formula="lungo-termine" />
       <VehicleListing
         formula="lungo-termine"
+        vehicles={vehicles}
         basePath={BASE_PATH}
         page={page}
       />
@@ -43,7 +49,11 @@ export default async function NoleggioLungoTerminePage({
       {/* Contact (125:4257): same content as the homepage section, but the
           Figma frame nests two 48px-padded ghiaccio frames (96px above and
           below) and the form card is 1027px tall (27px bottom inset). */}
-      <ContactSection className="py-24 md:py-ds-8" cardClassName="pb-[27px]" />
+      <ContactSection
+        contact={contact}
+        className="py-24 md:py-ds-8"
+        cardClassName="pb-[27px]"
+      />
     </main>
   )
 }

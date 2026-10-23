@@ -7,6 +7,7 @@ import {
   VehicleListing,
   parseListingParams,
 } from "@/components/formula/vehicle-listing"
+import { getSiteSettings, getVehiclesByFormula } from "@/lib/content"
 
 const BASE_PATH = "/vendita"
 
@@ -27,6 +28,10 @@ export default async function VenditaPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
   const { page } = parseListingParams(await searchParams, "vendita")
+  const [vehicles, { contact }] = await Promise.all([
+    getVehiclesByFormula("vendita"),
+    getSiteSettings(),
+  ])
 
   return (
     <main>
@@ -34,11 +39,20 @@ export default async function VenditaPage({
       {/* The ghiaccio band (Frame 471, y 929) starts 13px inside the hero
           frame (ends at 942), so the eyebrow sits 35px below the hero, not 48. */}
       <FormulaBenefits formula="vendita" className="pt-[35px]" />
-      <VehicleListing formula="vendita" basePath={BASE_PATH} page={page} />
+      <VehicleListing
+        formula="vendita"
+        vehicles={vehicles}
+        basePath={BASE_PATH}
+        page={page}
+      />
 
       {/* Contact (101:10658): two nested 48px-padded ghiaccio frames (96px
           above and below) and a 1027px form card (27px bottom inset). */}
-      <ContactSection className="py-24 md:py-ds-8" cardClassName="pb-[27px]" />
+      <ContactSection
+        contact={contact}
+        className="py-24 md:py-ds-8"
+        cardClassName="pb-[27px]"
+      />
     </main>
   )
 }

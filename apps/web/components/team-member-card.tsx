@@ -1,14 +1,13 @@
 import Image from "next/image"
 
+import { CroppedImage } from "@/components/cropped-image"
+import { focalPosition, type SiteImage } from "@/lib/media"
 import { cn } from "@workspace/ui/lib/utils"
-import { CroppedImage, type ImageCrop } from "@/components/cropped-image"
 
 export type TeamMember = {
   name: string
   role: string
-  photo: string
-  /** Optional Figma crop of the photo inside the frame. */
-  crop?: ImageCrop
+  photo: SiteImage
 }
 
 /** Figma team card: 160×209 photo with a 64px white name panel overlapping its last 31px. */
@@ -23,10 +22,10 @@ export function TeamMemberCard({
     <article className={cn("flex flex-col", className)}>
       <div className="relative aspect-[160/209] overflow-hidden rounded-t-image">
         <CroppedImage
-          src={member.photo}
+          src={member.photo.src}
           // The name is the card heading: the photo is decorative for screen readers.
           alt=""
-          crop={member.crop}
+          style={focalPosition(member.photo)}
           sizes="(min-width: 1024px) 300px, (min-width: 768px) 30vw, 50vw"
         />
       </div>

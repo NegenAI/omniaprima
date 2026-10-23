@@ -2,13 +2,10 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 import { OfferFlag, PulseDot } from "@/components/offer-flag"
 import { VehicleCard } from "@/components/vehicle-card"
-import { bySlug, byFormula, type Vehicle } from "@/lib/vehicles"
-
-const vehicle = (slug: string): Vehicle => {
-  const found = bySlug(slug)
-  if (!found) throw new Error(`Unknown vehicle ${slug}`)
-  return found
-}
+import {
+  vehicleFixture as vehicle,
+  vehicleFixturesByFormula,
+} from "@/payload/seed/data"
 
 const meta = {
   title: "Components/VehicleCard",
@@ -76,9 +73,9 @@ export const Grid: StoryObj = {
   render: () => (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {[
-        ...byFormula("lungo-termine").slice(0, 1),
-        ...byFormula("breve-termine").slice(4, 5),
-        ...byFormula("vendita").slice(0, 1),
+        ...vehicleFixturesByFormula("lungo-termine").slice(0, 1),
+        vehicle("renault-master-cassone-ribaltabile"),
+        ...vehicleFixturesByFormula("vendita").slice(0, 1),
       ].map((v) => (
         <VehicleCard key={v.slug} vehicle={v} />
       ))}

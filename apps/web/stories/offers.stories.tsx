@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 
 import { VehicleCard } from "@/components/vehicle-card"
-import { featuredByFormula } from "@/lib/vehicles"
+import { vehicleFixturesByFormula } from "@/payload/seed/data"
 import { Badge } from "@workspace/ui/components/badge"
 import {
   ToggleGroup,
@@ -59,7 +59,9 @@ export const Card: Story = {
   render: () => (
     <div className="w-[350px] bg-secondary p-ds-4">
       <VehicleCard
-        vehicle={featuredByFormula("breve-termine")[0]!}
+        vehicle={vehicleFixturesByFormula("breve-termine").find(
+          (v) => v.featured
+        )!}
         context="home"
       />
     </div>
