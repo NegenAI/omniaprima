@@ -19,7 +19,18 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: { baseDir: dirname },
-    meta: { titleSuffix: " · Omnia Prima" },
+    meta: {
+      titleSuffix: " · Omnia Prima",
+      icons: [{ rel: "icon", type: "image/svg+xml", url: "/icon.svg" }],
+    },
+    // Brand colours are in app/(payload)/custom.scss, tuned for light mode.
+    theme: "light",
+    components: {
+      graphics: {
+        Logo: "/payload/admin/graphics#Logo",
+        Icon: "/payload/admin/graphics#Icon",
+      },
+    },
   },
   collections: [Vehicles, TeamMembers, Media, Users],
   globals: [SiteSettings],

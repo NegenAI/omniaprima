@@ -1,0 +1,52 @@
+// Omnia Prima brand for the admin panel (light theme only, see payload.config.ts).
+// Payload builds its whole UI from these scales: `base` (backgrounds, borders,
+// text and primary buttons) and `success` (accents). They are interpolated
+// from the site tokens in packages/ui/src/styles/globals.css:
+// white → ghiaccio #f2f6ff (50) → navy-100 (100) → navy-200 (200) →
+// navy-500 (500) → navy-700 (700) → navy #0d2137 (800, text and buttons),
+// and azzurro #2d97d3 (500) / azzurro-700 #0c77b4 (650) for accents.
+@layer payload {
+  :root {
+    --color-base-0: rgb(255, 255, 255);
+    --color-base-50: rgb(242, 246, 255);
+    --color-base-100: rgb(232, 238, 245);
+    --color-base-150: rgb(216, 227, 238);
+    --color-base-200: rgb(200, 216, 232);
+    --color-base-250: rgb(174, 194, 215);
+    --color-base-300: rgb(147, 172, 197);
+    --color-base-350: rgb(121, 150, 180);
+    --color-base-400: rgb(95, 129, 163);
+    --color-base-450: rgb(68, 107, 145);
+    --color-base-500: rgb(42, 85, 128);
+    --color-base-550: rgb(38, 78, 119);
+    --color-base-600: rgb(34, 72, 110);
+    --color-base-650: rgb(30, 65, 101);
+    --color-base-700: rgb(26, 58, 92);
+    --color-base-750: rgb(20, 46, 74);
+    --color-base-800: rgb(13, 33, 55);
+    --color-base-850: rgb(10, 27, 46);
+    --color-base-900: rgb(8, 22, 36);
+    --color-base-950: rgb(6, 16, 27);
+    --color-base-1000: rgb(3, 10, 18);
+
+    --color-success-50: rgb(238, 247, 252);
+    --color-success-100: rgb(220, 238, 248);
+    --color-success-150: rgb(200, 228, 244);
+    --color-success-200: rgb(180, 219, 241);
+    --color-success-250: rgb(160, 210, 238);
+    --color-success-300: rgb(140, 200, 234);
+    --color-success-350: rgb(116, 188, 228);
+    --color-success-400: rgb(92, 176, 222);
+    --color-success-450: rgb(69, 163, 217);
+    --color-success-500: rgb(45, 151, 211);
+    --color-success-550: rgb(34, 140, 201);
+    --color-success-600: rgb(23, 130, 190);
+    --color-success-650: rgb(12, 119, 180);
+    --color-success-700: rgb(12, 105, 158);
+    --color-success-750: rgb(11, 91, 137);
+    --color-success-800: rgb(11, 76, 116);
+    --color-success-850: rgb(11, 62, 94);
+    --color-success-900: rgb(10, 48, 72);
+    --color-success-950: rgb(10, 34, 51);
+  }
+}
