@@ -22,8 +22,10 @@ const publicDir = path.resolve(
 )
 
 const payload = await getPayload({ config })
-// No Next.js runtime here: skip the page revalidation hooks.
-const context = { disableRevalidate: true }
+// No Next.js runtime here: skip the page revalidation hooks. A new object
+// per call: Payload uses it as `req.context`, and the cloud storage plugin
+// leaves `skipCloudStorage` on it, which would skip every later upload.
+const context = () => ({ disableRevalidate: true })
 
 const existing = await payload.count({ collection: "vehicles" })
 if (existing.totalDocs > 0 && process.env.SEED_RESET !== "1") {
@@ -34,7 +36,7 @@ if (existing.totalDocs > 0 && process.env.SEED_RESET !== "1") {
 }
 
 for (const collection of ["vehicles", "team-members", "media"] as const) {
-  await payload.delete({ collection, where: {}, context })
+  await payload.delete({ collection, where: {}, context: context() })
 }
 
 const mediaIds = new Map<string, number>()
@@ -51,7 +53,7 @@ async function upload(media: MediaSource) {
       focalY: media.focalY ?? undefined,
     },
     filePath: path.join(publicDir, url),
-    context,
+    context: context(),
   })
   mediaIds.set(url, doc.id)
   return doc.id
@@ -69,7 +71,7 @@ for (const vehicle of placeholderVehicles) {
       gallery,
       _status: "published",
     },
-    context,
+    context: context(),
   })
 }
 
@@ -77,14 +79,14 @@ for (const member of placeholderTeam) {
   await payload.create({
     collection: "team-members",
     data: { ...member, photo: await upload(member.photo) },
-    context,
+    context: context(),
   })
 }
 
 await payload.updateGlobal({
   slug: "site-settings",
   data: placeholderSiteSettings,
-  context,
+  context: context(),
 })
 
 payload.logger.info(

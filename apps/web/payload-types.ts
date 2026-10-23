@@ -207,6 +207,8 @@ export interface Media {
    * Descrizione dell'immagine per chi usa un lettore di schermo, es. “Fiat 500 verde acqua, vista frontale”.
    */
   alt: string;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -424,6 +426,8 @@ export interface TeamMembersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

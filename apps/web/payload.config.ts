@@ -39,6 +39,9 @@ export default buildConfig({
     vercelBlobStorage({
       // Without a token (local development) uploads stay in ./media.
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      // Same media columns with or without a token, so migrations generated
+      // locally match production (default in Payload v4).
+      alwaysInsertFields: true,
       // Images are public: serve them straight from the Blob CDN.
       collections: { media: { disablePayloadAccessControl: true } },
       token: process.env.BLOB_READ_WRITE_TOKEN,
